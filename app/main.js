@@ -7,7 +7,7 @@ dojo.require("esri.map");
 ***************** begin config section ****************
 *******************************************************/
 
-var TITLE = "This is the title."
+var TITLE = "World's Largest Container Ports"
 var BYLINE = "This is the byline"
 var WEBMAP_ID = "3732b8a6d0bc4a09b00247e8daf69af8";
 var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer";
@@ -85,7 +85,7 @@ function init() {
 		if ($(this).find(".numberDiv").hasClass("selected")) {
 			$(this).find(".numberDiv").removeClass("selected");
 			$(this).find(".nameDiv").removeClass("selected");
-			$("#blot").animate({left:406});
+			$("#blot").animate({left:$("#case").width()});
 		} else {
 			$("li .nameDiv").removeClass("selected");
 			$("li .numberDiv").removeClass("selected");
@@ -149,18 +149,28 @@ function initMap() {
 	
 	handleWindowResize();
 	
+	$("#case #blot").css("left", $("#case").width());
+	
 }
 
 function handleWindowResize() {
+	
 	$("#leftPane").height($("body").height() - $("#header").height());
 	$("#leftPane").width(parseInt($("body").width() * .4));
+	
+	$("#case #wrapper #scroller .nameDiv").width($("#leftPane").width() - $("#case #wrapper #scroller .numberDiv").width()); 
+	$("#case #blot").width($("#leftPane").width() - 40);	
+	$("#case #blot").height($("#leftPane").height());
+		
 	$("#map").height($("body").height() - $("#header").height());
 	$("#map").width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
+	
 	_map.resize();
+	
 }
 
 function backToList() 
 {
 	$("li").removeClass("selected");
-	$("#blot").animate({left:406});
+	$("#case #blot").animate({left:$("#case").width()});
 }
