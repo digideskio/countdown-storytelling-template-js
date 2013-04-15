@@ -17,6 +17,7 @@ var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/G
 *******************************************************/
 
 var _map;
+var _scroll;
 
 var _dojoReady = false;
 var _jqueryReady = false;
@@ -30,6 +31,15 @@ var _isEmbed = false;
 
 dojo.addOnLoad(function() {_dojoReady = true;init()});
 jQuery(document).ready(function() {_jqueryReady = true;init()});
+
+if (document.addEventListener) {
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	document.addEventListener('DOMContentLoaded', loaded, false);
+} else {
+	document.attachEvent('touchmove', function (e) { e.preventDefault(); }, false);
+	document.attachEvent('DOMContentLoaded', loaded, false);
+}
+
 
 function init() {
 	
@@ -69,6 +79,26 @@ function init() {
 	
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
+	
+	$("li").click(function(e) 
+	{
+		if ($(this).find(".numberDiv").hasClass("selected")) {
+			$(this).find(".numberDiv").removeClass("selected");
+			$(this).find(".nameDiv").removeClass("selected");
+			$("#blot").animate({left:406});
+		} else {
+			$("li .nameDiv").removeClass("selected");
+			$("li .numberDiv").removeClass("selected");
+			$(this).find(".numberDiv").addClass("selected");
+			$(this).find(".nameDiv").addClass("selected");
+			var index = $.inArray(this,$("#scroller li"));
+			_scroll.scrollToPage(0, index, 500);			
+			$("#divInfo").empty();
+			$("#divInfo").append($(this).find(".nameDiv").html());			
+			setTimeout(function(){$("#blot").animate({left:40},"slow")}, 400);
+		}
+	});
+	
 
 	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "map", {
 		mapOptions: {
@@ -96,6 +126,10 @@ function init() {
 	
 }
 
+function loaded() {
+	_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
+}
+
 function initMap() {
 	
 	// if _homeExtent hasn't been set, then default to the initial extent
@@ -121,4 +155,10 @@ function handleWindowResize() {
 	$("#map").height($("body").height() - $("#header").height());
 	$("#map").width($("body").width());
 	_map.resize();
+}
+
+function backToList() 
+{
+	$("li").removeClass("selected");
+	$("#blot").animate({left:406});
 }
