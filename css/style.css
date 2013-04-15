@@ -162,64 +162,6 @@ a:hover{
 	cursor:pointer;
 }
 
-#wrapper {
-	position:absolute; 
-	z-index:1;
-	width:400px;
-	height:400px;
-	background:#aaa;
-	overflow:auto;
-}
-
-#scroller {
-	position:relative;
-/*	-webkit-touch-callout:none;*/
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-	float:left;
-	width:100%;
-	padding:0;
-}
-
-#scroller ul {
-	position:relative;
-	list-style:none;
-	padding:0;
-	margin:0;
-	width:100%;
-	text-align:left;
-}
-
-#scroller li {
-	height:40px;
-	line-height:40px;
-	border-bottom:1px solid #ccc;
-	background-color:#fafafa;
-	font-size:14px;
-	cursor:pointer;
-}
-
-.selected {
-	background-color:#FF99CC;
-	color:#FFFFFF;
-	border-color:#000000;
-}
-
-#scroller li > a {
-	display:block;
-}
-
-.numberDiv {
-	float:left;
-	width:40px;
-	text-align:center;
-	font-size:30px;
-}
-.nameDiv {
-	float:left;
-	height:40px;
-	width:355px;
-}
-
 #case {
 	position:absolute;
 	top:0px;
@@ -229,8 +171,67 @@ a:hover{
 	background-color:none;
 }
 
+#case #wrapper {
+	position:absolute; 
+	z-index:1;
+	width:400px;
+	height:400px;
+	background:#aaa;
+	overflow:auto;
+}
 
-#blot {
+#case #wrapper #scroller {
+	position:relative;
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	float:left;
+	width:100%;
+	padding:0;
+}
+
+#case #wrapper #scroller ul {
+	position:relative;
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	text-align:left;
+}
+
+#case #wrapper #scroller li {
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ccc;
+	background-color:#fafafa;
+	font-size:14px;
+	cursor:pointer;
+}
+
+#case #wrapper #scroller li > a {
+	display:block;
+}
+
+#case #wrapper #scroller .selected {
+	background-color:#FF99CC;
+	color:#FFFFFF;
+	border-color:#000000;
+}
+
+#case #wrapper #scroller .numberDiv {
+	float:left;
+	width:40px;
+	text-align:center;
+	font-size:30px;
+}
+
+#case #wrapper #scroller .nameDiv {
+	float:left;
+	height:40px;
+	width:355px;
+}
+
+
+#case #blot {
 	background-color:#FF99CC;
 	font-size:20px;
 	position:absolute;
@@ -241,7 +242,8 @@ a:hover{
 	left:406px;
 	color:#FFFFFF;
 }
-#blot a {
+
+#case #blot a {
 	font:Verdana, Geneva, sans-serif;
 	color:#FFFFFF;
 	position:absolute;
@@ -249,7 +251,8 @@ a:hover{
 	right:10px;
 	font-size:15px;
 }
-#info {
+
+#case #blot #info {
 	margin-left:15px;
 	font-size:15px;
 	height:70px;
@@ -258,7 +261,7 @@ a:hover{
 	overflow-x:hidden;
 }
 
-.locator {
+#case #blot .locator {
 	margin-left:10px;
 	margin-top:20px;
 	border:solid;
