@@ -12,11 +12,16 @@ var BYLINE = "This is the byline"
 var WEBMAP_ID = "3732b8a6d0bc4a09b00247e8daf69af8";
 var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer";
 
+var BASEMAP_SERVICE_NATGEO = "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer";
+var BASEMAP_SERVICE_SATELLITE = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
+
+
 /******************************************************
 ***************** end config section ******************
 *******************************************************/
 
 var _map;
+var _mapOV;
 var _scroll;
 
 var _dojoReady = false;
@@ -34,10 +39,8 @@ jQuery(document).ready(function() {_jqueryReady = true;init()});
 
 if (document.addEventListener) {
 	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-	document.addEventListener('DOMContentLoaded', loaded, false);
 } else {
 	document.attachEvent('touchmove', function (e) { e.preventDefault(); }, false);
-	document.attachEvent('DOMContentLoaded', loaded, false);
 }
 
 
@@ -62,6 +65,8 @@ function init() {
 			}
 		}
 	}
+	
+	_scroll = new iScroll('wrapper', {snap:'li',momentum:true});	
 	
 	// jQuery event assignment
 	
@@ -99,8 +104,11 @@ function init() {
 		}
 	});
 	
+	_map = new esri.Map("map");
+	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
+	_map.setLevel(7);
 
-	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "map", {
+	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "mapOV", {
 		mapOptions: {
 			slider: false,
 			wrapAround180: true,
@@ -112,12 +120,12 @@ function init() {
 	
 	mapDeferred.addCallback(function(response) {	  
 
-		_map = response.map;
+		_mapOV = response.map;
 
-		if(_map.loaded){
+		if(_mapOV.loaded){
 			initMap();
 		} else {
-			dojo.connect(_map,"onLoad",function(){
+			dojo.connect(_mapOV,"onLoad",function(){
 				initMap();
 			});
 		}
@@ -127,7 +135,6 @@ function init() {
 }
 
 function loaded() {
-	_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
 }
 
 function initMap() {
@@ -165,7 +172,11 @@ function handleWindowResize() {
 	$("#map").height($("body").height() - $("#header").height());
 	$("#map").width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
 	
+	$("#mapOV").width($("#case #blot").width() - (parseInt($("#case #blot #mapOV").css("margin-left")) + parseInt($("#case #blot #mapOV").css("margin-right"))));
+	$("#mapOV").height($("#case #blot").height() - 135);
+	
 	_map.resize();
+	_mapOV.resize();
 	
 }
 
