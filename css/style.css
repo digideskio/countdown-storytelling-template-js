@@ -127,8 +127,9 @@ a:hover{
 	border:none;
 	padding:0;
 	height:100%;
-	width:100%;
+	width:50%;
 	overflow:hidden;
+	float:left;
 }
 
 #hoverInfo{
@@ -160,6 +161,16 @@ a:hover{
 	width:32px;
 	z-index:2;
 	cursor:pointer;
+}
+
+#leftPane {
+	min-width:350px;
+	width:40%;
+	height:100%;
+	float:left;
+	position:relative;
+	border-right:solid;
+	border-right-width:2px;
 }
 
 #case {

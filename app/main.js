@@ -152,8 +152,10 @@ function initMap() {
 }
 
 function handleWindowResize() {
+	$("#leftPane").height($("body").height() - $("#header").height());
+	$("#leftPane").width(parseInt($("body").width() * .4));
 	$("#map").height($("body").height() - $("#header").height());
-	$("#map").width($("body").width());
+	$("#map").width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
 	_map.resize();
 }
 
