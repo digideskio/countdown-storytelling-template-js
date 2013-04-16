@@ -158,17 +158,17 @@ function init() {
 			if ($(this).find(".numberDiv").hasClass("selected")) {
 				backToList();
 			} else {
-				$("li .nameDiv").removeClass("selected");
-				$("li .numberDiv").removeClass("selected");
-				$(this).find(".numberDiv").addClass("selected");
-				$(this).find(".nameDiv").addClass("selected");
-				/*
-				var index = $.inArray(this,$("#scroller li"));
-				_scroll.scrollToPage(0, index, 500);
-				*/			
-				$("#divInfo").empty();
-				$("#divInfo").append($(this).find(".nameDiv").html());			
-				setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){_mapOV.resize()})}, 400);
+				
+				highlightTab(this);
+				
+				var index = $.inArray(this, $("#scroller li"));
+			
+				setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){
+					_mapOV.resize();
+					preSelection();
+					_selected = _locations[index];
+					postSelection();
+				})}, 400);
 			}
 		});
 		
@@ -184,9 +184,18 @@ function init() {
 	
 }
 
+function highlightTab(tab) 
+{
+	$("li .nameDiv").removeClass("selected");
+	$("li .numberDiv").removeClass("selected");
+	$(tab).find(".numberDiv").addClass("selected");
+	$(tab).find(".nameDiv").addClass("selected");
+}
+
 function initMap() {
 
 	_mapOV.removeLayer(_mapOV.getLayer(_sourceLayer.id));	
+	_mapOV.setLevel(7);
 	
 	// if _homeExtent hasn't been set, then default to the initial extent
 	// of the web map.  On the other hand, if it HAS been set AND we're using
@@ -211,11 +220,12 @@ function initMap() {
 
 function layer_onClick(event)
 {
-	/*
-	var index = event.graphic.attributes.getRank() - 1;
-	_click = true;
-	_scroll.scrollToPage(index, 0, 100);
-	*/
+	preSelection();
+	_selected = event.graphic;
+	var index = $.inArray(_selected, _locations);
+	highlightTab($("#scroller li").eq(index));
+	_scroll.scrollToPage(0, index, 500);	
+	postSelection();
 }
 
 function layer_onMouseOver(event)
@@ -263,6 +273,49 @@ function handleWindowResize() {
 	_mapOV.resize();
 	
 }
+
+function preSelection() {
+	
+	// return the soon-to-be formerly selected graphic icon to normal
+	// size
+	
+	if (_selected) {
+		var height = _lutIconSpecs["normal"].getHeight();
+		var width = _lutIconSpecs["normal"].getWidth();
+		var offset_x = _lutIconSpecs["normal"].getOffsetX()
+		var offset_y = _lutIconSpecs["normal"].getOffsetY();
+		_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x,offset_y));
+	}
+	
+}
+
+function postSelection()
+{
+	
+	if (_map.getLevel() == 15) {
+		_map.centerAt(_selected.geometry);
+	}
+	else {
+		_map.centerAndZoom(_selected.geometry, 15);
+	}
+	
+	_mapOV.centerAt(_selected.geometry);	
+		
+	// make the selected location's icon BIG
+	var height = _lutIconSpecs["large"].getHeight();
+	var width = _lutIconSpecs["large"].getWidth();
+	var offset_x = _lutIconSpecs["large"].getOffsetX()
+	var offset_y = _lutIconSpecs["large"].getOffsetY();
+	
+	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y));
+	
+	$("#divInfo").empty();
+	$("#divInfo").append(_selected.attributes.getName());			
+	
+	setTimeout(function(){moveGraphicToFront(_selected)},500);
+	
+}
+
 
 function backToList() 
 {
