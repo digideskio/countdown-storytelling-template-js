@@ -150,9 +150,7 @@ function init() {
 		$("li").click(function(e) 
 		{
 			if ($(this).find(".numberDiv").hasClass("selected")) {
-				$(this).find(".numberDiv").removeClass("selected");
-				$(this).find(".nameDiv").removeClass("selected");
-				$("#blot").animate({left:$("#case").width()});
+				backToList();
 			} else {
 				$("li .nameDiv").removeClass("selected");
 				$("li .numberDiv").removeClass("selected");
@@ -225,6 +223,7 @@ function handleWindowResize() {
 
 function backToList() 
 {
-	$("li").removeClass("selected");
+	$(this).find(".numberDiv").removeClass("selected");
+	$(this).find(".nameDiv").removeClass("selected");
 	$("#case #blot").animate({left:$("#case").width()});
 }
