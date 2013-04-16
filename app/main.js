@@ -223,7 +223,7 @@ function handleWindowResize() {
 
 function backToList() 
 {
-	$(this).find(".numberDiv").removeClass("selected");
-	$(this).find(".nameDiv").removeClass("selected");
+	$(".numberDiv").removeClass("selected");
+	$(".nameDiv").removeClass("selected");
 	$("#case #blot").animate({left:$("#case").width()});
 }
