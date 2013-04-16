@@ -212,7 +212,6 @@ a:hover{
 	height:40px;
 	line-height:40px;
 	border-bottom:1px solid #ccc;
-	background-color:#fafafa;
 	font-size:14px;
 	cursor:pointer;
 }
@@ -221,28 +220,26 @@ a:hover{
 	display:block;
 }
 
-#case #wrapper #scroller .selected {
-	background-color:#FF99CC;
-	color:#FFFFFF;
-	border-color:#000000;
-}
-
 #case #wrapper #scroller .numberDiv {
 	float:left;
 	width:40px;
 	text-align:center;
 	font-size:30px;
+	background-color:#7c7c7c;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	color:#FFFFFF;
 }
 
 #case #wrapper #scroller .nameDiv {
 	float:left;
 	height:40px;
 	width:100%;
+	background-color:#e4e4e4;
 }
 
 
 #case #blot {
-	background-color:#FF99CC;
+	background-color:#FFFFFF;
 	font-size:20px;
 	position:absolute;
 	width:357px;
@@ -250,7 +247,6 @@ a:hover{
 	z-index:50;
 	top:0px;
 	left:1000px;
-	color:#FFFFFF;
 }
 
 #case #blot a {
@@ -281,3 +277,8 @@ a:hover{
 	width:100%;
 }
 
+.selected {
+	background-color:#FF0000 !important;
+	color:#FFFFFF;
+	border-color:#000000;
+}

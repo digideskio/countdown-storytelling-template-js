@@ -136,7 +136,7 @@ function init() {
 				);
 			   _mapOV.graphics.add(value);
 			   numDiv = $("<div class='numberDiv'>"+value.attributes.getRank()+"</div>");
-			   nameDiv = $("<div class='nameDiv'>"+value.attributes.getName()+"</div>");
+			   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.getName()+"</span></div>");
 			   li = $("<li></li>");
 			   $(li).append(numDiv);
 			   $(li).append(nameDiv);
