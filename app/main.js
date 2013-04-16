@@ -104,7 +104,7 @@ function init() {
 	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "mapOV", {
 		mapOptions: {
 			slider: false,
-			wrapAround180: true,
+			wrapAround180: false,
 			extent:_homeExtent
 		},
 		ignorePopups: false,
@@ -168,7 +168,7 @@ function init() {
 				*/			
 				$("#divInfo").empty();
 				$("#divInfo").append($(this).find(".nameDiv").html());			
-				setTimeout(function(){$("#blot").animate({left:40},"slow")}, 400);
+				setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){_mapOV.resize()})}, 400);
 			}
 		});
 		
