@@ -309,8 +309,8 @@ function postSelection()
 	
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y));
 	
-	$("#divInfo").empty();
-	$("#divInfo").append(_selected.attributes.getName());			
+	$("#label").empty();
+	$("#label").append(_selected.attributes.getName());			
 	
 	setTimeout(function(){moveGraphicToFront(_selected)},500);
 	
