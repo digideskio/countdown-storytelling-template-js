@@ -24,8 +24,9 @@ var BASEMAP_SERVICE_SATELLITE = "http://services.arcgisonline.com/ArcGIS/rest/se
 var _map;
 var _mapOV;
 var _scroll;
-
+var _sourceLayer;
 var _locations;
+var _selected;
 
 var _lutIconSpecs = {
 	normal:new IconSpecs(22,28,3,8),
@@ -113,6 +114,11 @@ function init() {
 	mapDeferred.addCallback(function(response) {	  
 
 		_mapOV = response.map;
+		
+		// event handler for graphics
+		dojo.connect(_mapOV.graphics, "onMouseOver", layer_onMouseOver);
+		dojo.connect(_mapOV.graphics, "onMouseOut", layer_onMouseOut);
+		dojo.connect(_mapOV.graphics, "onClick", layer_onClick);		
 				
 		_sourceLayer = $.grep(
 			response.itemInfo.itemData.operationalLayers,
@@ -179,6 +185,8 @@ function init() {
 }
 
 function initMap() {
+
+	_mapOV.removeLayer(_mapOV.getLayer(_sourceLayer.id));	
 	
 	// if _homeExtent hasn't been set, then default to the initial extent
 	// of the web map.  On the other hand, if it HAS been set AND we're using
@@ -199,6 +207,41 @@ function initMap() {
 	
 	$("#case #blot").css("left", $("#case").width());
 
+}
+
+function layer_onClick(event)
+{
+	/*
+	var index = event.graphic.attributes.getRank() - 1;
+	_click = true;
+	_scroll.scrollToPage(index, 0, 100);
+	*/
+}
+
+function layer_onMouseOver(event)
+{
+	if (_isMobile) return;	
+	var graphic = event.graphic;
+	var spec = _lutIconSpecs.medium;
+	if (graphic != _selected) {
+		graphic.setSymbol(graphic.symbol.setHeight(spec.getHeight()).setWidth(spec.getWidth()).setOffset(spec.getOffsetX(), spec.getOffsetY()));
+	}
+	moveGraphicToFront(graphic);	
+	_mapOV.setMapCursor("pointer");
+	$("#hoverInfo").html(graphic.attributes.getName());
+	var pt = _mapOV.toScreen(graphic.geometry);
+	hoverInfoPos(pt.x, pt.y);	
+}
+
+function layer_onMouseOut(event)
+{
+	_mapOV.setMapCursor("default");
+	$("#hoverInfo").hide();	
+	var graphic = event.graphic;
+	var spec = _lutIconSpecs.normal;
+	if (graphic != _selected) {
+		graphic.setSymbol(graphic.symbol.setHeight(spec.getHeight()).setWidth(spec.getWidth()).setOffset(spec.getOffsetX(), spec.getOffsetY()));
+	}
 }
 
 function handleWindowResize() {
@@ -226,4 +269,20 @@ function backToList()
 	$(".numberDiv").removeClass("selected");
 	$(".nameDiv").removeClass("selected");
 	$("#case #blot").animate({left:$("#case").width()});
+}
+
+function hoverInfoPos(x,y){
+	if (x <= ($("#map").width())-230){
+		$("#hoverInfo").css("left",x+15);
+	}
+	else{
+		$("#hoverInfo").css("left",x-25-($("#hoverInfo").width()));
+	}
+	if (y >= ($("#hoverInfo").height())+50){
+		$("#hoverInfo").css("top",y-35-($("#hoverInfo").height()));
+	}
+	else{
+		$("#hoverInfo").css("top",y-15+($("#hoverInfo").height()));
+	}
+	$("#hoverInfo").show();
 }

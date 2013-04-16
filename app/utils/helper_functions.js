@@ -52,3 +52,9 @@ function getGraphicsExtent(graphics) {
 }
 
 // getViewportDimensions --> $(body).width() / height()
+
+function moveGraphicToFront(graphic)
+{
+	var dojoShape = graphic.getDojoShape();
+	if (dojoShape) dojoShape.moveToFront();
+}
