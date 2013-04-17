@@ -96,6 +96,25 @@ function init() {
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
 	
+	$(document).keydown(function(e){
+		
+		if (!_selected) return;
+		
+		if ((e.keyCode != 38) && (e.keyCode != 40)) {
+			return;
+		}
+
+		var index = $.inArray(_selected, _locations);
+		index = (e.keyCode == 40) ? index + 1 : index - 1;
+		if ((index > _locations.length - 1) || (index < 0)) return; 
+
+		preSelection();
+		_selected = _locations[index];
+		postSelection();
+		highlightTab($("#scroller li").eq(index));
+		_scroll.scrollToPage(0, index, 500);	
+
+	});	
 	
 	_map = new esri.Map("map");
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
