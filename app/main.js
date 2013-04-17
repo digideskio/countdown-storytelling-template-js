@@ -162,13 +162,14 @@ function init() {
 				highlightTab(this);
 				
 				var index = $.inArray(this, $("#scroller li"));
-			
+				preSelection();
+				_selected = _locations[index];
+				postSelection();
+				
 				setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){
 					_mapOV.resize();
-					preSelection();
-					_selected = _locations[index];
-					postSelection();
 				})}, 400);
+				
 			}
 		});
 		
