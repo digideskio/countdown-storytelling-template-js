@@ -165,10 +165,8 @@ function init() {
 				preSelection();
 				_selected = _locations[index];
 				postSelection();
-				
-				setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){
-					_mapOV.resize();
-				})}, 400);
+
+				reveal();				
 				
 			}
 		});
@@ -183,6 +181,13 @@ function init() {
 				
 	});
 	
+}
+
+function reveal()
+{
+	setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){
+		_mapOV.resize();
+	})}, 400);	
 }
 
 function highlightTab(tab) 
@@ -216,6 +221,12 @@ function initMap() {
 	handleWindowResize();
 	
 	$("#case #blot").css("left", $("#case").width());
+	
+	preSelection();
+	_selected = _locations[0];
+	postSelection();
+	highlightTab($("#scroller li").eq(0));
+	reveal();
 
 }
 
