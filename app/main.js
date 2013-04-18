@@ -112,7 +112,7 @@ function init() {
 		_selected = _locations[index];
 		postSelection();
 		highlightTab($("#scroller li").eq(index));
-		_scroll.scrollToPage(0, index, 500);	
+		scrollToPage(index);	
 
 	});	
 	
@@ -202,6 +202,11 @@ function init() {
 	
 }
 
+function scrollToPage(index)
+{
+	_scroll.scrollToPage(0, index, 500);
+}
+
 function reveal()
 {
 	setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){
@@ -255,7 +260,7 @@ function layer_onClick(event)
 	_selected = event.graphic;
 	var index = $.inArray(_selected, _locations);
 	highlightTab($("#scroller li").eq(index));
-	_scroll.scrollToPage(0, index, 500);	
+	scrollToPage(index);	
 	postSelection();
 }
 
