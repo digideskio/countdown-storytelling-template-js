@@ -296,9 +296,10 @@ function handleWindowResize() {
 		
 	$("#map").height($("body").height() - $("#header").height());
 	$("#map").width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
+	$("#case #blot #inner").height($("#case #blot").height() - (parseInt($("#case #blot #inner").css("margin-top")) + parseInt($("#case #blot #inner").css("margin-bottom")) + 30));
 	
-	$("#mapOV").width($("#case #blot").width() - (parseInt($("#case #blot #mapOV").css("margin-left")) + parseInt($("#case #blot #mapOV").css("margin-right"))));
-	$("#mapOV").height($("#case #blot").height() - 135);
+	$("#mapOV").width($("#case #blot #inner").width());
+	$("#mapOV").height($("#case #blot #inner").height() - $("#case #blot #inner #label").height());
 	
 	_map.resize();
 	_mapOV.resize();
