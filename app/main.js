@@ -217,12 +217,14 @@ function scrollToPage(index)
 
 function pageDown()
 {
-	_scroll.scrollTo(0, ($("#wrapper").height() - 40), 200, true);
+	var div = parseInt($("#wrapper").height() / 40);
+	_scroll.scrollTo(0, div * 40, 200, true);
 }
 
 function pageUp()
 {
-	_scroll.scrollTo(0, -($("#wrapper").height() - 40), 200, true);
+	var div = parseInt($("#wrapper").height() / 40);
+	_scroll.scrollTo(0, -div * 40, 200, true);
 }
 
 function reveal()
@@ -313,14 +315,13 @@ function handleWindowResize() {
 	$("#leftPane").height($("body").height() - $("#header").height());
 	$("#leftPane").width(parseInt($("body").width() * .4));
 
-	$("#case").height($("#leftPane").height() - $("#divControls").height());
+	$("#case").height($("#leftPane").height());
 
 	$("#case #table").height($("#case").height());
-	
 	$("#case #table #wrapper #scroller .nameDiv").width($("#leftPane").width() - $("#case #wrapper #scroller .numberDiv").width()); 
 	
 	
-	$("#case #wrapper").height($("#case").height() - $("#topRow").height() - $("#bottomRow").height());
+	$("#case #wrapper").height($("#case").height() - $("#topRow").height() - $("#bottomRow").height() - 3);
 	$("#case #blot").width($("#leftPane").width() - 40);	
 	$("#case #blot").height($("#leftPane").height());
 		
