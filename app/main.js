@@ -94,11 +94,11 @@ function init() {
     });
 	
 	$("#topRow").click(function(e) {
-        alert('top');
+        pageUp();
     });
 
 	$("#bottomRow").click(function(e) {
-        alert('down');
+        pageDown();
     });
 	
 	$("#title").append(TITLE);
@@ -213,6 +213,16 @@ function init() {
 function scrollToPage(index)
 {
 	_scroll.scrollToPage(0, index, 500);
+}
+
+function pageDown()
+{
+	_scroll.scrollTo(0, ($("#wrapper").height() - 40), 200, true);
+}
+
+function pageUp()
+{
+	_scroll.scrollTo(0, -($("#wrapper").height() - 40), 200, true);
 }
 
 function reveal()
