@@ -217,14 +217,14 @@ function scrollToPage(index)
 
 function pageDown()
 {
-	var div = parseInt($("#wrapper").height() / 40);
-	_scroll.scrollTo(0, div * 40, 200, true);
+	var div = Math.floor($("#wrapper").height() / 41);
+	_scroll.scrollTo(0, div * 41, 200, true);
 }
 
 function pageUp()
 {
-	var div = parseInt($("#wrapper").height() / 40);
-	_scroll.scrollTo(0, -div * 40, 200, true);
+	var div = -Math.floor($("#wrapper").height() / 41);
+	_scroll.scrollTo(0, div * 41, 200, true);
 }
 
 function reveal()
