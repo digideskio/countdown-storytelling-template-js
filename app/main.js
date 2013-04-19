@@ -93,6 +93,14 @@ function init() {
         _map.setExtent(_homeExtent);
     });
 	
+	$("#topRow").click(function(e) {
+        alert('top');
+    });
+
+	$("#bottomRow").click(function(e) {
+        alert('down');
+    });
+	
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
 	
@@ -294,8 +302,15 @@ function handleWindowResize() {
 	
 	$("#leftPane").height($("body").height() - $("#header").height());
 	$("#leftPane").width(parseInt($("body").width() * .4));
+
+	$("#case").height($("#leftPane").height() - $("#divControls").height());
+
+	$("#case #table").height($("#case").height());
 	
-	$("#case #wrapper #scroller .nameDiv").width($("#leftPane").width() - $("#case #wrapper #scroller .numberDiv").width()); 
+	$("#case #table #wrapper #scroller .nameDiv").width($("#leftPane").width() - $("#case #wrapper #scroller .numberDiv").width()); 
+	
+	
+	$("#case #wrapper").height($("#case").height() - $("#topRow").height() - $("#bottomRow").height());
 	$("#case #blot").width($("#leftPane").width() - 40);	
 	$("#case #blot").height($("#leftPane").height());
 		
