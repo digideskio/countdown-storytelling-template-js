@@ -373,7 +373,8 @@ function postSelection()
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y));
 	
 	$("#label").empty();
-	$("#label").append("<span class='number'>"+_selected.attributes.getRank()+"</span> <span class='title'>"+_selected.attributes.getName()+"</span>");			
+	$("#label").append("<span class='number'>"+_selected.attributes.getRank()+".</span> <span class='title'>"+_selected.attributes.getName()+", "+_selected.attributes.getCountry()+"</span>");			
+	handleWindowResize();  // because the height of the label may have changed, the ov map may need resizing...
 	
 	setTimeout(function(){moveGraphicToFront(_selected)},500);
 	
