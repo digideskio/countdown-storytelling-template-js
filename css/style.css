@@ -273,10 +273,9 @@ a:hover{
 #case #blot #inner {
 	position:relative;	
 	background-color:#FFF;
-	margin-top:10px;
-	margin-bottom:15px;
-	margin-left:15px;
-	margin-right:15px;
+	margin-left:2px;
+	margin-right:2px;
+	margin-bottom:1px;
 }
 
 #case #blot a {
@@ -294,8 +293,6 @@ a:hover{
 }
 
 #case #blot #mapOV {
-	border:solid;
-	border-width:thin;
 	height:100%;
 	width:100%;
 }
