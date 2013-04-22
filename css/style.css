@@ -188,7 +188,6 @@ a:hover{
 	position:absolute;
 	background-color:#e4e4e4;
 	width:100%;
-	cursor:pointer;
 	height:40px;
 	line-height:40px;
 	border-bottom:1px solid #ccc;
@@ -197,6 +196,20 @@ a:hover{
 #bottomRow {
 	bottom:0px;
 	border-top:1px solid #ccc;
+}
+
+#topRow .numberDiv {
+	cursor:pointer;
+}
+
+#bottomRow .numberDiv {
+	cursor:pointer;
+}
+
+#topRow #iconList {
+	margin-top:10px;
+	margin-left:10px;
+	cursor:pointer;	
 }
 
 #case #wrapper {
@@ -264,7 +277,7 @@ a:hover{
 	width:357px;
 	height:297px;
 	z-index:50;
-	top:0px;
+	top:40px;
 	left:1000px;
 }
 

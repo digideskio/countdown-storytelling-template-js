@@ -93,11 +93,15 @@ function init() {
         _map.setExtent(_homeExtent);
     });
 	
-	$("#topRow").click(function(e) {
+	$("#topRow .numberDiv").click(function(e) {
         pageUp();
     });
+	
+	$("#topRow #iconList").click(function(e) {
+		backToList();
+	});
 
-	$("#bottomRow").click(function(e) {
+	$("#bottomRow .numberDiv").click(function(e) {
         pageDown();
     });
 	
