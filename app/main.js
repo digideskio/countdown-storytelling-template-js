@@ -123,7 +123,7 @@ function init() {
 		preSelection();
 		_selected = _locations[index];
 		postSelection();
-		highlightTab($("#scroller li").eq(index));
+		highlightTab($("#thelist li").eq(index));
 		scrollToPage(index);	
 
 	});	
@@ -192,7 +192,7 @@ function init() {
 				
 				highlightTab(this);
 				
-				var index = $.inArray(this, $("#scroller li"));
+				var index = $.inArray(this, $("#thelist li"));
 				preSelection();
 				_selected = _locations[index];
 				postSelection();
@@ -273,7 +273,7 @@ function initMap() {
 	preSelection();
 	_selected = _locations[0];
 	postSelection();
-	highlightTab($("#scroller li").eq(0));
+	highlightTab($("#thelist li").eq(0));
 	reveal();
 
 }
@@ -283,7 +283,7 @@ function layer_onClick(event)
 	preSelection();
 	_selected = event.graphic;
 	var index = $.inArray(_selected, _locations);
-	highlightTab($("#scroller li").eq(index));
+	highlightTab($("#thelist li").eq(index));
 	scrollToPage(index);	
 	postSelection();
 }
@@ -322,8 +322,7 @@ function handleWindowResize() {
 	$("#case").height($("#leftPane").height());
 
 	$("#case #table").height($("#case").height());
-	$("#case #table #wrapper #scroller .nameDiv").width($("#leftPane").width() - $("#case #wrapper #scroller .numberDiv").width()); 
-	
+	$("#case #table #wrapper .nameDiv").width($("#leftPane").width() - $("#case #wrapper .numberDiv").width()); 
 	
 	$("#case #wrapper").height($("#case").height() - $("#topRow").height() - $("#bottomRow").height() - 3);
 	$("#case #blot").width($("#leftPane").width() - 40);	
