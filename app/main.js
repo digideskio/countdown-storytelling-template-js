@@ -373,7 +373,7 @@ function postSelection()
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y));
 	
 	$("#label").empty();
-	$("#label").append("#"+($.inArray(_selected, _locations) + 1)+" "+_selected.attributes.getName());			
+	$("#label").append("<span class='number'>"+_selected.attributes.getRank()+"</span> <span class='title'>"+_selected.attributes.getName()+"</span>");			
 	
 	setTimeout(function(){moveGraphicToFront(_selected)},500);
 	
