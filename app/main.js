@@ -10,7 +10,7 @@ dojo.require("esri.map");
 var TITLE = "World's Largest Container Ports"
 var BYLINE = "This is the byline"
 var WEBMAP_ID = "3732b8a6d0bc4a09b00247e8daf69af8";
-var LOCATIONS_LAYER_TITLE = "Largest Container Ports";
+var LOCATIONS_LAYER_TITLE = "AAPA_PORT_RANKINGS_2011_1999_edited";
 var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer";
 
 var BASEMAP_SERVICE_NATGEO = "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer";
@@ -134,7 +134,7 @@ function init() {
 			wrapAround180: false,
 			extent:_homeExtent
 		},
-		ignorePopups: false,
+		ignorePopups: true,
 		geometryServiceURL: GEOMETRY_SERVICE_URL
 	});
 	
