@@ -361,8 +361,6 @@ function postSelection()
 	else {
 		_map.centerAndZoom(_selected.geometry, 15);
 	}
-	
-	_mapOV.centerAt(_selected.geometry);	
 		
 	// make the selected location's icon BIG
 	var height = _lutIconSpecs["large"].getHeight();
@@ -374,9 +372,9 @@ function postSelection()
 	
 	$("#label").empty();
 	$("#label").append("<span class='number'>"+_selected.attributes.getRank()+".</span> <span class='title'>"+_selected.attributes.getName()+", "+_selected.attributes.getCountry()+"</span>");			
-	handleWindowResize();  // because the height of the label may have changed, the ov map may need resizing...
+	handleWindowResize();  // because the height of the label may have changed, the ov map may need resizing...		
 	
-	setTimeout(function(){moveGraphicToFront(_selected)},500);
+	setTimeout(function(){moveGraphicToFront(_selected);_mapOV.centerAt(_selected.geometry)},500);
 	
 }
 
