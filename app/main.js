@@ -16,6 +16,8 @@ var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/G
 var BASEMAP_SERVICE_NATGEO = "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer";
 var BASEMAP_SERVICE_SATELLITE = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
 
+var USE_ISCROLL = false;
+
 
 /******************************************************
 ***************** end config section ******************
@@ -181,7 +183,12 @@ function init() {
 			});
 		});
 		
-		_scroll = new iScroll('wrapper', {snap:'li',momentum:true});	
+		if (USE_ISCROLL) {
+			_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
+		} else {
+			$("#wrapper").css("overflow", "hidden");
+			$("#thelist").css("overflow", "hidden");
+		}
 	
 			
 		$("li").click(function(e) 
@@ -216,19 +223,35 @@ function init() {
 
 function scrollToPage(index)
 {
-	_scroll.scrollToPage(0, index, 500);
+	if (_scroll) {
+		_scroll.scrollToPage(0, index, 500);
+	} else {
+		$("#thelist").animate({scrollTop: (index*41)}, 'slow');
+	}
 }
 
 function pageDown()
 {
 	var div = Math.floor($("#wrapper").height() / 41);
-	_scroll.scrollTo(0, div * 41, 200, true);
+	if (_scroll) {
+		_scroll.scrollTo(0, div * 41, 200, true);
+	} else {
+		var top = $("#thelist").scrollTop() + (div*41); 
+		$("#thelist").animate({scrollTop: top}, 'slow');
+	}
 }
 
 function pageUp()
 {
-	var div = -Math.floor($("#wrapper").height() / 41);
-	_scroll.scrollTo(0, div * 41, 200, true);
+	var div = Math.floor($("#wrapper").height() / 41);
+	if (_scroll) {
+		_scroll.scrollTo(0, -div * 41, 200, true);
+	} else {
+		var currentIndex = Math.floor($("#thelist").scrollTop() / 41);
+		var newIndex = currentIndex - div;
+		var top = newIndex*41; 
+		$("#thelist").animate({scrollTop: top}, 'slow');
+	}
 }
 
 function reveal()
@@ -334,6 +357,10 @@ function handleWindowResize() {
 	
 	$("#mapOV").width($("#case #blot #inner").width());
 	$("#mapOV").height($("#case #blot #inner").height() - ($("#case #blot #label").height() + $("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
+	
+	if (!_scroll) {
+		$("#thelist").height($("#wrapper").height());
+	}
 	
 	_map.resize();
 	_mapOV.resize();
