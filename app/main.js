@@ -326,14 +326,14 @@ function handleWindowResize() {
 	
 	$("#case #wrapper").height($("#case").height() - $("#topRow").height() - $("#bottomRow").height() - 3);
 	$("#case #blot").width($("#leftPane").width() - 40);	
-	$("#case #blot").height($("#leftPane").height());
+	$("#case #blot").height($("#leftPane").height() - $("#topRow").height() - 21);
 		
 	$("#map").height($("body").height() - $("#header").height());
 	$("#map").width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
 	$("#case #blot #inner").height($("#case #blot").height() - (parseInt($("#case #blot #inner").css("margin-top")) + parseInt($("#case #blot #inner").css("margin-bottom"))));
 	
 	$("#mapOV").width($("#case #blot #inner").width());
-	$("#mapOV").height($("#case #blot #inner").height() - $("#case #blot #label").height() - parseInt($("#case #blot #inner").css("margin-top")));
+	$("#mapOV").height($("#case #blot #inner").height() - ($("#case #blot #label").height() + $("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
 	
 	_map.resize();
 	_mapOV.resize();
