@@ -304,9 +304,10 @@ a:hover{
 	font-size:22px;
 }
 
-#case #blot #mapOV {
+#mapOV {
 	height:100%;
 	width:100%;
+	position:relative;
 }
 
 .selected {
