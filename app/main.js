@@ -139,7 +139,7 @@ function init() {
 
 	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "mapOV", {
 		mapOptions: {
-			slider: false,
+			slider: true,
 			wrapAround180: false,
 			extent:_homeExtent
 		},
@@ -205,6 +205,15 @@ function init() {
 				
 			}
 		});
+
+		$("#mapOV .esriSimpleSlider").hide();	
+		
+		$("#mapOV").hover(function(e) {
+        	$("#mapOV .esriSimpleSlider").fadeIn();
+			console.log("hover");
+        },function(e) {
+            $("#mapOV .esriSimpleSlider").fadeOut();
+        })
 		
 		dojo.connect(_sourceLayer, "onMouseOver", layer_onMouseOver);
 		dojo.connect(_sourceLayer, "onMouseOut", layer_onMouseOut);
