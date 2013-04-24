@@ -158,12 +158,13 @@ function init() {
 			function(n,i){
 				return $.trim(n.title).toLowerCase() == $.trim(LOCATIONS_LAYER_TITLE).toLowerCase()
 			})[0].featureCollection.layers[0];
+		_sourceLayer = _mapOV.getLayer(_sourceLayer.id);
 		
 		var numDiv;
 		var nameDiv;
 		var li;		  
 
-		_locations = _mapOV.getLayer(_sourceLayer.id).graphics;
+		_locations = _sourceLayer.graphics;
 		var spec = _lutIconSpecs.normal;
 		$.each(_locations, function(index, value) {
 			value.setSymbol(new esri.symbol.PictureMarkerSymbol(
@@ -205,6 +206,10 @@ function init() {
 			}
 		});
 		
+		dojo.connect(_sourceLayer, "onMouseOver", layer_onMouseOver);
+		dojo.connect(_sourceLayer, "onMouseOut", layer_onMouseOut);
+		dojo.connect(_sourceLayer, "onClick", layer_onClick);			
+		
 		if(_mapOV.loaded){
 			initMap();
 		} else {
@@ -219,7 +224,6 @@ function init() {
 
 function initMap() {
 
-	//_mapOV.removeLayer(_mapOV.getLayer(_sourceLayer.id));	
 	_mapOV.setLevel(7);
 	
 	// if _homeExtent hasn't been set, then default to the initial extent
@@ -253,10 +257,9 @@ function initMap() {
 
 function transfer()
 {
-	var arr = $.grep(_mapOV.getLayer(_sourceLayer.id).graphics, function(n, i){
+	var arr = $.grep(_sourceLayer.graphics, function(n, i){
 		return n.attributes.PORT == _selected.attributes.PORT
 	});
-	console.log("setting feature to", arr);
 	_mapOV.infoWindow.setFeatures([arr[0]]);
 	_mapOV.infoWindow.show();
 	$("#info").append($(".contentPane"));
