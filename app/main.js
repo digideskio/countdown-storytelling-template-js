@@ -29,6 +29,7 @@ var _scroll;
 var _sourceLayer;
 var _locations;
 var _selected;
+var _popup;
 
 var _lutIconSpecs = {
 	normal:new IconSpecs(22,28,3,8),
@@ -133,6 +134,8 @@ function init() {
 	_map = new esri.Map("map");
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
 	_map.setLevel(7);
+	
+	_popup = new esri.dijit.Popup(null, dojo.create("div"));
 
 	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "mapOV", {
 		mapOptions: {
@@ -140,7 +143,8 @@ function init() {
 			wrapAround180: false,
 			extent:_homeExtent
 		},
-		ignorePopups: true,
+		ignorePopups: false,
+		infoWindow: _popup,
 		geometryServiceURL: GEOMETRY_SERVICE_URL
 	});
 	
@@ -149,9 +153,13 @@ function init() {
 		_mapOV = response.map;
 		
 		// event handler for graphics
-		dojo.connect(_mapOV.graphics, "onMouseOver", layer_onMouseOver);
-		dojo.connect(_mapOV.graphics, "onMouseOut", layer_onMouseOut);
-		dojo.connect(_mapOV.graphics, "onClick", layer_onClick);		
+		var layerIcons = new esri.layers.GraphicsLayer();
+		_mapOV.addLayer(layerIcons);
+		dojo.connect(layerIcons, "onMouseOver", layer_onMouseOver);
+		dojo.connect(layerIcons, "onMouseOut", layer_onMouseOut);
+		dojo.connect(layerIcons, "onClick", layer_onClick);	
+		
+		_mapOV.graphics.hide();	
 				
 		_sourceLayer = $.grep(
 			response.itemInfo.itemData.operationalLayers,
@@ -173,7 +181,7 @@ function init() {
 					spec.getWidth(), 
 					spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
 				);
-			   _mapOV.graphics.add(value);
+			   layerIcons.add(value);
 			   numDiv = $("<div class='numberDiv'>"+value.attributes.getRank()+"</div>");
 			   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.getName()+"</span></div>");
 			   li = $("<li></li>");
@@ -219,6 +227,17 @@ function init() {
 				
 	});
 	
+}
+
+function transfer()
+{
+	var arr = $.grep(_mapOV.getLayer(_sourceLayer.id).graphics, function(n, i){
+		return n.attributes.PORT == _selected.attributes.getName()
+	});
+	console.log("setting feature to", arr);
+	_mapOV.infoWindow.setFeatures([arr[0]]);
+	_mapOV.infoWindow.show();
+	$("#info").append($(".contentPane"));
 }
 
 function scrollToPage(index)
@@ -271,7 +290,7 @@ function highlightTab(tab)
 
 function initMap() {
 
-	_mapOV.removeLayer(_mapOV.getLayer(_sourceLayer.id));	
+	//_mapOV.removeLayer(_mapOV.getLayer(_sourceLayer.id));	
 	_mapOV.setLevel(7);
 	
 	// if _homeExtent hasn't been set, then default to the initial extent
@@ -298,6 +317,8 @@ function initMap() {
 	postSelection();
 	highlightTab($("#thelist li").eq(0));
 	reveal();
+	
+	setTimeout(function(){transfer()},500);
 
 }
 
@@ -403,6 +424,8 @@ function postSelection()
 	$("#label").empty();
 	$("#label").append("<span class='number'>"+_selected.attributes.getRank()+".</span> <span class='title'>"+_selected.attributes.getName()+", "+_selected.attributes.getCountry()+"</span>");			
 	handleWindowResize();  // because the height of the label may have changed, the ov map may need resizing...		
+	
+	transfer();
 	
 	setTimeout(function(){moveGraphicToFront(_selected);_mapOV.centerAt(_selected.geometry)},500);
 	
