@@ -258,7 +258,7 @@ function initMap() {
 	highlightTab($("#thelist li").eq(0));
 	reveal();
 	
-	setTimeout(function(){transfer()},500);
+	setTimeout(function(){transfer(); if(_scroll){_scroll.refresh()}},500);
 
 }
 
