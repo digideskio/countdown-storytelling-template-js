@@ -229,6 +229,40 @@ function init() {
 	
 }
 
+function initMap() {
+
+	//_mapOV.removeLayer(_mapOV.getLayer(_sourceLayer.id));	
+	_mapOV.setLevel(7);
+	
+	// if _homeExtent hasn't been set, then default to the initial extent
+	// of the web map.  On the other hand, if it HAS been set AND we're using
+	// the embed option, we need to reset the extent (because the map dimensions
+	// have been changed on the fly).
+
+	if (!_homeExtent) {
+		_homeExtent = _map.extent;
+	} else {
+		if (_isEmbed) {
+			setTimeout(function(){
+				_map.setExtent(_homeExtent)
+			},500);
+		}	
+	}
+	
+	handleWindowResize();
+	
+	$("#case #blot").css("left", $("#case").width());
+	
+	preSelection();
+	_selected = _locations[0];
+	postSelection();
+	highlightTab($("#thelist li").eq(0));
+	reveal();
+	
+	setTimeout(function(){transfer()},500);
+
+}
+
 function transfer()
 {
 	var arr = $.grep(_mapOV.getLayer(_sourceLayer.id).graphics, function(n, i){
@@ -286,40 +320,6 @@ function highlightTab(tab)
 	$("li .numberDiv").removeClass("selected");
 	$(tab).find(".numberDiv").addClass("selected");
 	$(tab).find(".nameDiv").addClass("selected");
-}
-
-function initMap() {
-
-	//_mapOV.removeLayer(_mapOV.getLayer(_sourceLayer.id));	
-	_mapOV.setLevel(7);
-	
-	// if _homeExtent hasn't been set, then default to the initial extent
-	// of the web map.  On the other hand, if it HAS been set AND we're using
-	// the embed option, we need to reset the extent (because the map dimensions
-	// have been changed on the fly).
-
-	if (!_homeExtent) {
-		_homeExtent = _map.extent;
-	} else {
-		if (_isEmbed) {
-			setTimeout(function(){
-				_map.setExtent(_homeExtent)
-			},500);
-		}	
-	}
-	
-	handleWindowResize();
-	
-	$("#case #blot").css("left", $("#case").width());
-	
-	preSelection();
-	_selected = _locations[0];
-	postSelection();
-	highlightTab($("#thelist li").eq(0));
-	reveal();
-	
-	setTimeout(function(){transfer()},500);
-
 }
 
 function layer_onClick(event)
