@@ -150,15 +150,7 @@ function init() {
 	
 	mapDeferred.addCallback(function(response) {	  
 
-		_mapOV = response.map;
-		
-		// event handler for graphics
-		var layerIcons = new esri.layers.GraphicsLayer();
-		_mapOV.addLayer(layerIcons);
-		dojo.connect(layerIcons, "onMouseOver", layer_onMouseOver);
-		dojo.connect(layerIcons, "onMouseOut", layer_onMouseOut);
-		dojo.connect(layerIcons, "onClick", layer_onClick);	
-		
+		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
 				
 		_sourceLayer = $.grep(
@@ -167,28 +159,24 @@ function init() {
 				return $.trim(n.title).toLowerCase() == $.trim(LOCATIONS_LAYER_TITLE).toLowerCase()
 			})[0].featureCollection.layers[0];
 		
-		var locationsService = new LocationsParserService();
 		var numDiv;
 		var nameDiv;
 		var li;		  
 
-		locationsService.process(_sourceLayer.featureSet.features, function(locations){
-			_locations = locations;
-			var spec = _lutIconSpecs.normal;
-			$.each(_locations, function(index, value) {
-				value.setSymbol(new esri.symbol.PictureMarkerSymbol(
-					ICON_PREFIX+value.attributes.getRank()+ICON_SUFFIX, 
-					spec.getWidth(), 
-					spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
-				);
-			   layerIcons.add(value);
-			   numDiv = $("<div class='numberDiv'>"+value.attributes.getRank()+"</div>");
-			   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.getName()+"</span></div>");
-			   li = $("<li></li>");
-			   $(li).append(numDiv);
-			   $(li).append(nameDiv);
-			   $("#thelist").append(li);
-			});
+		_locations = _mapOV.getLayer(_sourceLayer.id).graphics;
+		var spec = _lutIconSpecs.normal;
+		$.each(_locations, function(index, value) {
+			value.setSymbol(new esri.symbol.PictureMarkerSymbol(
+				ICON_PREFIX+value.attributes.RANK+ICON_SUFFIX, 
+				spec.getWidth(), 
+				spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
+			);
+		   numDiv = $("<div class='numberDiv'>"+value.attributes.RANK+"</div>");
+		   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.PORT+"</span></div>");
+		   li = $("<li></li>");
+		   $(li).append(numDiv);
+		   $(li).append(nameDiv);
+		   $("#thelist").append(li);
 		});
 		
 		if (USE_ISCROLL) {
@@ -266,7 +254,7 @@ function initMap() {
 function transfer()
 {
 	var arr = $.grep(_mapOV.getLayer(_sourceLayer.id).graphics, function(n, i){
-		return n.attributes.PORT == _selected.attributes.getName()
+		return n.attributes.PORT == _selected.attributes.PORT
 	});
 	console.log("setting feature to", arr);
 	_mapOV.infoWindow.setFeatures([arr[0]]);
@@ -342,7 +330,7 @@ function layer_onMouseOver(event)
 	}
 	moveGraphicToFront(graphic);	
 	_mapOV.setMapCursor("pointer");
-	$("#hoverInfo").html(graphic.attributes.getName());
+	$("#hoverInfo").html(graphic.attributes.PORT);
 	var pt = _mapOV.toScreen(graphic.geometry);
 	hoverInfoPos(pt.x, pt.y);	
 }
@@ -422,7 +410,7 @@ function postSelection()
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y));
 	
 	$("#label").empty();
-	$("#label").append("<span class='number'>"+_selected.attributes.getRank()+".</span> <span class='title'>"+_selected.attributes.getName()+", "+_selected.attributes.getCountry()+"</span>");			
+	$("#label").append("<span class='number'>"+_selected.attributes.RANK+".</span> <span class='title'>"+_selected.attributes.PORT+", "+_selected.attributes.COUNTRY+"</span>");			
 	handleWindowResize();  // because the height of the label may have changed, the ov map may need resizing...		
 	
 	transfer();
