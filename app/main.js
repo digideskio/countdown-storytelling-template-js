@@ -16,9 +16,6 @@ var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/G
 var BASEMAP_SERVICE_NATGEO = "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer";
 var BASEMAP_SERVICE_SATELLITE = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
 
-var USE_ISCROLL = false;
-
-
 /******************************************************
 ***************** end config section ******************
 *******************************************************/
@@ -47,6 +44,7 @@ var _homeExtent; // set this in init() if desired; otherwise, it will
 				 // be the default extent of the web map;
 
 var _isMobile = isMobile();
+var _isLegacyIE = ((navigator.appVersion.indexOf("MSIE 8") > -1) || (navigator.appVersion.indexOf("MSIE 8") > -1));
 
 var _isEmbed = false;
 
@@ -180,7 +178,7 @@ function init() {
 		   $("#thelist").append(li);
 		});
 		
-		if (USE_ISCROLL) {
+		if (!_isLegacyIE) {
 			_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
 		} else {
 			$("#wrapper").css("overflow", "hidden");
