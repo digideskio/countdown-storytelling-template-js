@@ -173,7 +173,7 @@ function init() {
 				spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
 			);
 		   numDiv = $("<div class='numberDiv'>"+value.attributes.RANK+"</div>");
-		   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.PORT+"</span></div>");
+		   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.PORT+", "+value.attributes.COUNTRY+"</span></div>");
 		   li = $("<li></li>");
 		   $(li).append(numDiv);
 		   $(li).append(nameDiv);
