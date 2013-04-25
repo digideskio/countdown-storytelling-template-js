@@ -9,8 +9,8 @@ dojo.require("esri.map");
 
 var TITLE = "World's Largest Container Ports"
 var BYLINE = "This is the byline"
-var WEBMAP_ID = "3732b8a6d0bc4a09b00247e8daf69af8";
-var LOCATIONS_LAYER_TITLE = "AAPA_PORT_RANKINGS_2011_1999_edited";
+var WEBMAP_ID = "e119cddd0c1a4ca9b1d87df57d0c62fb";
+var LOCATIONS_LAYER_ID = "csv_2334_0";
 var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer";
 
 var BASEMAP_SERVICE_NATGEO = "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer";
@@ -150,13 +150,14 @@ function init() {
 
 		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
-				
+		/*	
 		_sourceLayer = $.grep(
 			response.itemInfo.itemData.operationalLayers,
 			function(n,i){
 				return $.trim(n.title).toLowerCase() == $.trim(LOCATIONS_LAYER_TITLE).toLowerCase()
 			})[0].featureCollection.layers[0];
-		_sourceLayer = _mapOV.getLayer(_sourceLayer.id);
+		*/	
+		_sourceLayer = _mapOV.getLayer(LOCATIONS_LAYER_ID);
 		
 		var numDiv;
 		var nameDiv;
@@ -216,7 +217,7 @@ function init() {
 		dojo.connect(_sourceLayer, "onMouseOver", layer_onMouseOver);
 		dojo.connect(_sourceLayer, "onMouseOut", layer_onMouseOut);
 		dojo.connect(_sourceLayer, "onClick", layer_onClick);			
-		
+
 		if(_mapOV.loaded){
 			initMap();
 		} else {
