@@ -270,7 +270,7 @@ function transfer()
 	});
 	_mapOV.infoWindow.setFeatures([arr[0]]);
 	_mapOV.infoWindow.show();
-	$("#info").append($(".contentPane"));
+	$("#info").html($(".contentPane"));
 }
 
 function scrollToPage(index)
