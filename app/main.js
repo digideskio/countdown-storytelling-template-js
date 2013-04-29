@@ -27,8 +27,8 @@ var _locations;
 var _selected;
 var _popup;
 
-var _divView;
-var _divNav;
+var _divMapRight;
+var _divMapLeft;
 
 var _lutIconSpecs = {
 	normal:new IconSpecs(22,28,3,8),
@@ -62,7 +62,7 @@ function init() {
 	if (!_jqueryReady) return;
 	if (!_dojoReady) return;
 	
-	_divView = $("#map");
+	_divMapRight = $("#map");
 	_divOV = $("#mapOV");
 	
 	// determine whether we're in embed mode
@@ -293,19 +293,19 @@ function reveal()
 function switchMaps()
 {
 	
-	if ($(_divView).attr("id") == $("#map").attr("id")) {
-		_divView = $("#mapOV");
-		_divNav = $("#map");
+	if ($(_divMapRight).attr("id") == $("#map").attr("id")) {
+		_divMapRight = $("#mapOV");
+		_divMapLeft = $("#map");
 	} else {
-		_divView = $("#map");
-		_divNav = $("#mapOV");
+		_divMapRight = $("#map");
+		_divMapLeft = $("#mapOV");
 	}
 	
-	$(_divView).detach();
-	$(_divNav).detach();
+	$(_divMapRight).detach();
+	$(_divMapLeft).detach();
 	
-	$("#inner").append(_divNav);
-	$(_divView).insertAfter($("#leftPane"));
+	$("#inner").append(_divMapLeft);
+	$(_divMapRight).insertAfter($("#leftPane"));
 	
 	handleWindowResize();
 	
