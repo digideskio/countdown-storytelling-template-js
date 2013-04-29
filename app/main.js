@@ -11,7 +11,6 @@ var TITLE = "World's Largest Container Ports"
 var BYLINE = "This is the byline"
 var WEBMAP_ID = "e119cddd0c1a4ca9b1d87df57d0c62fb";
 var LOCATIONS_LAYER_ID = "csv_2334_0";
-var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer";
 
 var BASEMAP_SERVICE_NATGEO = "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer";
 var BASEMAP_SERVICE_SATELLITE = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
@@ -130,8 +129,7 @@ function init() {
 			wrapAround180: true
 		},
 		ignorePopups: false,
-		infoWindow: _popup,
-		geometryServiceURL: GEOMETRY_SERVICE_URL
+		infoWindow: _popup	
 	});
 	
 	mapDeferred.addCallback(function(response) {	  
