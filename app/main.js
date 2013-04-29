@@ -56,7 +56,6 @@ if (document.addEventListener) {
 	document.attachEvent('touchmove', function (e) { e.preventDefault(); }, false);
 }
 
-
 function init() {
 	
 	if (!_jqueryReady) return;
@@ -122,10 +121,6 @@ function init() {
 		_sourceLayer = _mapOV.getLayer(LOCATIONS_LAYER_ID);
 		_locations = _sourceLayer.graphics;
 		
-		var numDiv;
-		var nameDiv;
-		var li;		  
-
 		loadList();
 		
 		if (!_isLegacyIE) {
@@ -136,7 +131,6 @@ function init() {
 		}
 				
 		$("li").click(listItemClick);
-		
 		
 		$("#switchMaps").click(function(e) {
             switchMaps();
@@ -305,6 +299,9 @@ function switchMaps()
 
 function loadList()
 {
+	var numDiv;
+	var nameDiv;
+	var li;	
 	var spec = _lutIconSpecs.normal;
 	$.each(_locations, function(index, value) {
 		value.setSymbol(new esri.symbol.PictureMarkerSymbol(
