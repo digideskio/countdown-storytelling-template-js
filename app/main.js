@@ -76,8 +76,6 @@ function init() {
 		if (queryString.embed) {
 			if (queryString.embed.toUpperCase() == "TRUE") {
 				_isEmbed = true;
-				$("#header").height(0);
-				$("#zoomToggle").css("top", "55px");
 				$("body").css("min-width","600px");
 				$("body").css("min-height","500px");			
 				$("body").width(600);
@@ -400,6 +398,9 @@ function layer_onMouseOut(event)
 
 function handleWindowResize() {
 	
+	if (($("body").height() <= 500) || ($("body").width() <= 900)) $("#header").height(0);
+	else $("#header").height(115);
+
 	var mapView, mapNav;
 	if ($("#inner").find("#mapOV").length > 0) {
 		mapView = $("#map");
