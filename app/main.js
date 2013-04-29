@@ -63,7 +63,7 @@ function init() {
 	if (!_dojoReady) return;
 	
 	_divMapRight = $("#map");
-	_divOV = $("#mapOV");
+	_divMapLeft = $("#mapOV");
 	
 	// determine whether we're in embed mode
 	
