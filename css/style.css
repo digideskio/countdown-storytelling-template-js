@@ -31,8 +31,9 @@ html,body {
 	*/
 	height:100%;
 	width:100%;
-	min-width:750px;
-	margin:auto	
+	min-width:600px;
+	min-height:500px;
+	margin:auto;	
 }
 
 body {

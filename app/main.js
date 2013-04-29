@@ -73,8 +73,6 @@ function init() {
 		if (queryString.embed) {
 			if (queryString.embed.toUpperCase() == "TRUE") {
 				_isEmbed = true;
-				$("body").css("min-width","600px");
-				$("body").css("min-height","500px");			
 				$("body").width(600);
 				$("body").height(400);
 			}
