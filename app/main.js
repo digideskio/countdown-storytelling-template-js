@@ -140,7 +140,6 @@ function init() {
 		
 		$("#mapOV").hover(function(e) {
         	$("#mapOV .esriSimpleSlider").fadeIn();
-			console.log("hover");
         },function(e) {
             $("#mapOV .esriSimpleSlider").fadeOut();
         })
