@@ -264,8 +264,6 @@ function initMap() {
 	
 	$("#case #blot").css("left", $("#case").width());
 	
-	setTimeout(function(){if(_scroll){_scroll.refresh()}},500);
-	
 	switchMaps();
 
 	setTimeout(function(){
@@ -413,6 +411,7 @@ function handleWindowResize() {
 	
 	$("#leftPane").height($("body").height() - $("#header").height());
 	$("#leftPane").width(parseInt($("body").width() * .4));
+	if ($("#leftPane").width() > 300) $("#leftPane").width(300);
 
 	$("#case").height($("#leftPane").height());
 
@@ -429,7 +428,7 @@ function handleWindowResize() {
 	$("#case #blot #inner").height($("#case #blot").height() - (parseInt($("#case #blot #inner").css("margin-top")) + parseInt($("#case #blot #inner").css("margin-bottom"))));
 	
 	$(mapNav).width($("#case #blot #inner").width());
-	$(mapNav).height($("#case #blot #inner").height() - ($("#case #blot #label").height() + $("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
+	$(mapNav).height($("#case #blot #inner").height() - ($("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
 	
 	if (!_scroll) {
 		$("#thelist").height($("#wrapper").height());
