@@ -19,7 +19,7 @@ var BASEMAP_SERVICE_SATELLITE = "http://services.arcgisonline.com/ArcGIS/rest/se
 ***************** end config section ******************
 *******************************************************/
 
-var _map;
+var _mapSat;
 var _mapOV;
 var _scroll;
 var _sourceLayer;
@@ -117,9 +117,9 @@ function init() {
 
 	});	
 	
-	_map = new esri.Map("map");
-	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
-	_map.setLevel(7);
+	_mapSat = new esri.Map("map");
+	_mapSat.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
+	_mapSat.setLevel(7);
 	
 	_popup = new esri.dijit.Popup(null, dojo.create("div"));
 
@@ -233,7 +233,7 @@ function initMap() {
 
 	setTimeout(function(){
 		if(_scroll){_scroll.refresh()}
-		_map.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));
+		_mapSat.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));
 		_mapOV.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));		
 	},500);
 
@@ -311,7 +311,7 @@ function switchMaps()
 	
 	if (_selected) {
 		setTimeout(function(){
-			_map.centerAt(_selected.geometry);
+			_mapSat.centerAt(_selected.geometry);
 			_mapOV.centerAt(_selected.geometry);
 		},500);
 	}
@@ -402,7 +402,7 @@ function handleWindowResize() {
 		$("#thelist").height($("#wrapper").height());
 	}
 	
-	_map.resize();
+	_mapSat.resize();
 	_mapOV.resize();
 	
 }
@@ -425,11 +425,11 @@ function preSelection() {
 function postSelection()
 {
 	
-	if (_map.getLevel() == 15) {
-		_map.centerAt(_selected.geometry);
+	if (_mapSat.getLevel() == 15) {
+		_mapSat.centerAt(_selected.geometry);
 	}
 	else {
-		_map.centerAndZoom(_selected.geometry, 15);
+		_mapSat.centerAndZoom(_selected.geometry, 15);
 	}
 		
 	// make the selected location's icon BIG
