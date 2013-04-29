@@ -120,26 +120,13 @@ function init() {
 		_mapOV.graphics.hide();	
 
 		_sourceLayer = _mapOV.getLayer(LOCATIONS_LAYER_ID);
+		_locations = _sourceLayer.graphics;
 		
 		var numDiv;
 		var nameDiv;
 		var li;		  
 
-		_locations = _sourceLayer.graphics;
-		var spec = _lutIconSpecs.normal;
-		$.each(_locations, function(index, value) {
-			value.setSymbol(new esri.symbol.PictureMarkerSymbol(
-				ICON_PREFIX+value.attributes.RANK+ICON_SUFFIX, 
-				spec.getWidth(), 
-				spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
-			);
-		   numDiv = $("<div class='numberDiv'>"+value.attributes.RANK+"</div>");
-		   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.PORT+", "+value.attributes.COUNTRY+"</span></div>");
-		   li = $("<li></li>");
-		   $(li).append(numDiv);
-		   $(li).append(nameDiv);
-		   $("#thelist").append(li);
-		});
+		loadList();
 		
 		if (!_isLegacyIE) {
 			_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
@@ -147,8 +134,7 @@ function init() {
 			$("#wrapper").css("overflow", "hidden");
 			$("#thelist").css("overflow", "hidden");
 		}
-	
-			
+				
 		$("li").click(function(e) 
 		{
 			if ($(this).find(".numberDiv").hasClass("selected")) {
@@ -313,6 +299,24 @@ function switchMaps()
 		},500);
 	}
 	
+}
+
+function loadList()
+{
+	var spec = _lutIconSpecs.normal;
+	$.each(_locations, function(index, value) {
+		value.setSymbol(new esri.symbol.PictureMarkerSymbol(
+			ICON_PREFIX+value.attributes.RANK+ICON_SUFFIX, 
+			spec.getWidth(), 
+			spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
+		);
+	   numDiv = $("<div class='numberDiv'>"+value.attributes.RANK+"</div>");
+	   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.PORT+", "+value.attributes.COUNTRY+"</span></div>");
+	   li = $("<li></li>");
+	   $(li).append(numDiv);
+	   $(li).append(nameDiv);
+	   $("#thelist").append(li);
+	});	
 }
 
 function highlightTab(tab) 
