@@ -135,23 +135,7 @@ function init() {
 			$("#thelist").css("overflow", "hidden");
 		}
 				
-		$("li").click(function(e) 
-		{
-			if ($(this).find(".numberDiv").hasClass("selected")) {
-				backToList();
-			} else {
-				
-				highlightTab(this);
-				
-				var index = $.inArray(this, $("#thelist li"));
-				preSelection();
-				_selected = _locations[index];
-				postSelection();
-
-				reveal();				
-				
-			}
-		});
+		$("li").click(listItemClick);
 		
 		
 		$("#switchMaps").click(function(e) {
@@ -231,6 +215,24 @@ function onKeyDown(e)
 	highlightTab($("#thelist li").eq(index));
 	scrollToPage(index);
 	
+}
+
+function listItemClick(e) 
+{
+	if ($(this).find(".numberDiv").hasClass("selected")) {
+		backToList();
+	} else {
+		
+		highlightTab(this);
+		
+		var index = $.inArray(this, $("#thelist li"));
+		preSelection();
+		_selected = _locations[index];
+		postSelection();
+
+		reveal();				
+		
+	}
 }
 
 function scrollToPage(index)
