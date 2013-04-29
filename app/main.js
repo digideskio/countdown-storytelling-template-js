@@ -28,6 +28,9 @@ var _locations;
 var _selected;
 var _popup;
 
+var _divView;
+var _divNav;
+
 var _lutIconSpecs = {
 	normal:new IconSpecs(22,28,3,8),
 	medium:new IconSpecs(24,30,3,8),
@@ -62,6 +65,9 @@ function init() {
 	
 	if (!_jqueryReady) return;
 	if (!_dojoReady) return;
+	
+	_divView = $("#map");
+	_divOV = $("#mapOV");
 	
 	// determine whether we're in embed mode
 	
@@ -138,7 +144,7 @@ function init() {
 	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "mapOV", {
 		mapOptions: {
 			slider: true,
-			wrapAround180: false,
+			wrapAround180: true,
 			extent:_homeExtent
 		},
 		ignorePopups: false,
@@ -204,6 +210,11 @@ function init() {
 				
 			}
 		});
+		
+		
+		$("#switchMaps").click(function(e) {
+            switchMaps();
+        });		
 
 		$("#mapOV .esriSimpleSlider").hide();	
 		
@@ -232,7 +243,7 @@ function init() {
 
 function initMap() {
 
-	_mapOV.setLevel(7);
+	_mapOV.setLevel(2);
 	
 	// if _homeExtent hasn't been set, then default to the initial extent
 	// of the web map.  On the other hand, if it HAS been set AND we're using
@@ -253,13 +264,16 @@ function initMap() {
 	
 	$("#case #blot").css("left", $("#case").width());
 	
-	preSelection();
-	_selected = _locations[0];
-	postSelection();
-	highlightTab($("#thelist li").eq(0));
-	reveal();
+	setTimeout(function(){if(_scroll){_scroll.refresh()}},500);
 	
-	setTimeout(function(){transfer(); if(_scroll){_scroll.refresh()}},500);
+	switchMaps();
+
+	setTimeout(function(){
+		if(_scroll){_scroll.refresh()}
+		_map.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));
+		_mapOV.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));		
+	},500);
+
 
 }
 
@@ -309,8 +323,36 @@ function pageUp()
 function reveal()
 {
 	setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){
-		_mapOV.resize();
+		_mapOV.resize(); transfer();
 	})}, 400);	
+}
+
+function switchMaps()
+{
+	
+	if ($(_divView).attr("id") == $("#map").attr("id")) {
+		_divView = $("#mapOV");
+		_divNav = $("#map");
+	} else {
+		_divView = $("#map");
+		_divNav = $("#mapOV");
+	}
+	
+	$(_divView).detach();
+	$(_divNav).detach();
+	
+	$("#inner").append(_divNav);
+	$(_divView).insertAfter($("#leftPane"));
+	
+	handleWindowResize();
+	
+	if (_selected) {
+		setTimeout(function(){
+			_map.centerAt(_selected.geometry);
+			_mapOV.centerAt(_selected.geometry);
+		},500);
+	}
+	
 }
 
 function highlightTab(tab) 
@@ -329,6 +371,7 @@ function layer_onClick(event)
 	highlightTab($("#thelist li").eq(index));
 	scrollToPage(index);	
 	postSelection();
+	reveal();
 }
 
 function layer_onMouseOver(event)
@@ -359,6 +402,15 @@ function layer_onMouseOut(event)
 
 function handleWindowResize() {
 	
+	var mapView, mapNav;
+	if ($("#inner").find("#mapOV").length > 0) {
+		mapView = $("#map");
+		mapNav = $("#mapOV");
+	} else {
+		mapView = $("#mapOV");
+		mapNav = $("#map");
+	}
+	
 	$("#leftPane").height($("body").height() - $("#header").height());
 	$("#leftPane").width(parseInt($("body").width() * .4));
 
@@ -371,12 +423,13 @@ function handleWindowResize() {
 	$("#case #blot").width($("#leftPane").width() - 40);	
 	$("#case #blot").height($("#leftPane").height() - $("#topRow").height() - 21);
 		
-	$("#map").height($("body").height() - $("#header").height());
-	$("#map").width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
+	$(mapView).height($("body").height() - $("#header").height());
+	$(mapView).width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
+	
 	$("#case #blot #inner").height($("#case #blot").height() - (parseInt($("#case #blot #inner").css("margin-top")) + parseInt($("#case #blot #inner").css("margin-bottom"))));
 	
-	$("#mapOV").width($("#case #blot #inner").width());
-	$("#mapOV").height($("#case #blot #inner").height() - ($("#case #blot #label").height() + $("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
+	$(mapNav).width($("#case #blot #inner").width());
+	$(mapNav).height($("#case #blot #inner").height() - ($("#case #blot #label").height() + $("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
 	
 	if (!_scroll) {
 		$("#thelist").height($("#wrapper").height());
