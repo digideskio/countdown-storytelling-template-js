@@ -79,25 +79,7 @@ function init() {
 			}
 		}
 	}
-	
-	// jQuery event assignment
-	
-	$(this).resize(handleWindowResize);
-	
-	$("#topRow .numberDiv").click(function(e) {
-        pageUp();
-    });
-	
-	$("#topRow #iconList").click(function(e) {
-		backToList();
-	});
-
-	$("#bottomRow .numberDiv").click(function(e) {
-        pageDown();
-    });
-	
-	$(document).keydown(onKeyDown);	
-	
+		
 	_mapSat = new esri.Map("map");
 	_mapSat.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
 	_mapSat.setLevel(7);
@@ -129,21 +111,9 @@ function init() {
 			$("#wrapper").css("overflow", "hidden");
 			$("#thelist").css("overflow", "hidden");
 		}
-				
-		$("li").click(listItemClick);
-		
-		$("#switchMaps").click(function(e) {
-            switchMaps();
-        });		
 
 		$("#mapOV .esriSimpleSlider").hide();	
-		
-		$("#mapOV").hover(function(e) {
-        	$("#mapOV .esriSimpleSlider").fadeIn();
-        },function(e) {
-            $("#mapOV .esriSimpleSlider").fadeOut();
-        })
-		
+				
 		dojo.connect(_sourceLayer, "onMouseOver", layer_onMouseOver);
 		dojo.connect(_sourceLayer, "onMouseOut", layer_onMouseOut);
 		dojo.connect(_sourceLayer, "onClick", layer_onClick);			
@@ -176,6 +146,35 @@ function initMap() {
 		_mapOV.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));		
 	},500);
 
+	// jQuery event assignment
+	
+	$(this).resize(handleWindowResize);
+	
+	$("#topRow .numberDiv").click(function(e) {
+		pageUp();
+	});
+	
+	$("#topRow #iconList").click(function(e) {
+		backToList();
+	});
+
+	$("#bottomRow .numberDiv").click(function(e) {
+		pageDown();
+	});
+	
+	$(document).keydown(onKeyDown);	
+			
+	$("li").click(listItemClick);
+	
+	$("#switchMaps").click(function(e) {
+		switchMaps();
+	});		
+
+	$("#mapOV").hover(function(e) {
+		$("#mapOV .esriSimpleSlider").fadeIn();
+	},function(e) {
+		$("#mapOV .esriSimpleSlider").fadeOut();
+	})
 
 }
 
