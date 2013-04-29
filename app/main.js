@@ -61,7 +61,10 @@ function init() {
 	
 	if (!_jqueryReady) return;
 	if (!_dojoReady) return;
-	
+
+	$("#title").append(TITLE);
+	$("#subtitle").append(BYLINE);	
+		
 	_divMapRight = $("#map");
 	_divMapLeft = $("#mapOV");
 	
@@ -93,9 +96,6 @@ function init() {
 	$("#bottomRow .numberDiv").click(function(e) {
         pageDown();
     });
-	
-	$("#title").append(TITLE);
-	$("#subtitle").append(BYLINE);	
 	
 	$(document).keydown(function(e){
 		
@@ -136,13 +136,7 @@ function init() {
 
 		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
-		/*	
-		_sourceLayer = $.grep(
-			response.itemInfo.itemData.operationalLayers,
-			function(n,i){
-				return $.trim(n.title).toLowerCase() == $.trim(LOCATIONS_LAYER_TITLE).toLowerCase()
-			})[0].featureCollection.layers[0];
-		*/	
+
 		_sourceLayer = _mapOV.getLayer(LOCATIONS_LAYER_ID);
 		
 		var numDiv;
