@@ -97,25 +97,7 @@ function init() {
         pageDown();
     });
 	
-	$(document).keydown(function(e){
-		
-		if (!_selected) return;
-		
-		if ((e.keyCode != 38) && (e.keyCode != 40)) {
-			return;
-		}
-
-		var index = $.inArray(_selected, _locations);
-		index = (e.keyCode == 40) ? index + 1 : index - 1;
-		if ((index > _locations.length - 1) || (index < 0)) return; 
-
-		preSelection();
-		_selected = _locations[index];
-		postSelection();
-		highlightTab($("#thelist li").eq(index));
-		scrollToPage(index);	
-
-	});	
+	$(document).keydown(onKeyDown);	
 	
 	_mapSat = new esri.Map("map");
 	_mapSat.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
@@ -242,6 +224,27 @@ function transfer()
 	_mapOV.infoWindow.setFeatures([arr[0]]);
 	_mapOV.infoWindow.show();
 	$("#info").html($(".contentPane"));
+}
+
+function onKeyDown(e)
+{
+	
+	if (!_selected) return;
+	
+	if ((e.keyCode != 38) && (e.keyCode != 40)) {
+		return;
+	}
+
+	var index = $.inArray(_selected, _locations);
+	index = (e.keyCode == 40) ? index + 1 : index - 1;
+	if ((index > _locations.length - 1) || (index < 0)) return; 
+
+	preSelection();
+	_selected = _locations[index];
+	postSelection();
+	highlightTab($("#thelist li").eq(index));
+	scrollToPage(index);
+	
 }
 
 function scrollToPage(index)
