@@ -43,9 +43,6 @@ var ICON_SUFFIX = ".png";
 var _dojoReady = false;
 var _jqueryReady = false;
 
-var _homeExtent; // set this in init() if desired; otherwise, it will 
-				 // be the default extent of the web map;
-
 var _isMobile = isMobile();
 var _isLegacyIE = ((navigator.appVersion.indexOf("MSIE 8") > -1) || (navigator.appVersion.indexOf("MSIE 8") > -1));
 
@@ -87,16 +84,6 @@ function init() {
 	// jQuery event assignment
 	
 	$(this).resize(handleWindowResize);
-	
-	$("#zoomIn").click(function(e) {
-        _map.setLevel(_map.getLevel()+1);
-    });
-	$("#zoomOut").click(function(e) {
-        _map.setLevel(_map.getLevel()-1);
-    });
-	$("#zoomExtent").click(function(e) {
-        _map.setExtent(_homeExtent);
-    });
 	
 	$("#topRow .numberDiv").click(function(e) {
         pageUp();
@@ -142,8 +129,7 @@ function init() {
 	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "mapOV", {
 		mapOptions: {
 			slider: true,
-			wrapAround180: true,
-			extent:_homeExtent
+			wrapAround180: true
 		},
 		ignorePopups: false,
 		infoWindow: _popup,
@@ -242,21 +228,6 @@ function init() {
 function initMap() {
 
 	_mapOV.setLevel(2);
-	
-	// if _homeExtent hasn't been set, then default to the initial extent
-	// of the web map.  On the other hand, if it HAS been set AND we're using
-	// the embed option, we need to reset the extent (because the map dimensions
-	// have been changed on the fly).
-
-	if (!_homeExtent) {
-		_homeExtent = _map.extent;
-	} else {
-		if (_isEmbed) {
-			setTimeout(function(){
-				_map.setExtent(_homeExtent)
-			},500);
-		}	
-	}
 	
 	handleWindowResize();
 	
