@@ -88,7 +88,6 @@ function init() {
 		
 	_mapSat = new esri.Map("map");
 	_mapSat.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
-	_mapSat.setLevel(7);
 	
 	_popup = new esri.dijit.Popup(null, dojo.create("div"));
 
@@ -145,8 +144,10 @@ function initMap() {
 
 	setTimeout(function(){
 		if(_scroll){_scroll.refresh()}
-		_mapSat.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));
-		_mapOV.centerAndZoom(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)), 2);		
+		var pt = new esri.geometry.Point(12,0,new esri.SpatialReference(4326));
+		var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? 3 : 2;
+		_mapSat.centerAt(pt);
+		_mapOV.centerAndZoom(pt, level);		
 		$("#whiteOut").fadeOut("slow");		
 	},500);
 
