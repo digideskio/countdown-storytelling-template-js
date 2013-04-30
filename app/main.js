@@ -7,7 +7,7 @@ dojo.require("esri.map");
 ***************** begin config section ****************
 *******************************************************/
 
-var TITLE = "Giant container ports stictch together the global economy"
+var TITLE = "Giant container ports stitch together the global economy"
 var BYLINE = "The fifty largest ports link six continents and countless supply chains."
 var WEBMAP_ID = "e119cddd0c1a4ca9b1d87df57d0c62fb";
 var LOCATIONS_LAYER_ID = "csv_2334_0";
@@ -35,6 +35,12 @@ var _lutIconSpecs = {
 	medium:new IconSpecs(24,30,3,8),
 	large:new IconSpecs(32,40,3,11)
 }
+
+var STATE_INTRO = 0;
+var STATE_TABLE = 1;
+var STATE_INFO = 2;
+
+var _currentState = STATE_INTRO;
 
 var ICON_PREFIX = "resources/icons/red/NumberIcon";
 var ICON_SUFFIX = ".png";
@@ -153,7 +159,7 @@ function initMap() {
 	});
 	
 	$("#topRow #iconList").click(function(e) {
-		backToList();
+		changeState(STATE_TABLE);
 	});
 
 	$("#bottomRow .numberDiv").click(function(e) {
@@ -210,7 +216,7 @@ function onKeyDown(e)
 function listItemClick(e) 
 {
 	if ($(this).find(".numberDiv").hasClass("selected")) {
-		backToList();
+		changeState(STATE_TABLE);
 	} else {
 		
 		highlightTab(this);
@@ -220,7 +226,7 @@ function listItemClick(e)
 		_selected = _locations[index];
 		postSelection();
 
-		reveal();				
+		changeState(STATE_INFO);				
 		
 	}
 }
@@ -258,14 +264,33 @@ function pageUp()
 	}
 }
 
-function reveal()
+function reveal(retractIntro)
 {
 	setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){
 		_mapOV.resize(); 
 		_mapSat.resize();
 		$("#flipper").fadeIn("slow");
 		transfer();
+		if (retractIntro) $("#intro").animate({left:500},"slow");				
 	})}, 400);	
+}
+
+function changeState(toState)
+{
+	if (toState == STATE_TABLE) {
+		if (_currentState == STATE_INTRO) {
+			$("#intro").animate({left:500},"slow");
+		} else {
+			backToList();
+		}
+	} else {
+		if (_currentState == STATE_INTRO) {
+			reveal(true);
+		} else {
+			reveal(false);
+		}
+	}
+	_currentState = toState;
 }
 
 function switchMaps()
@@ -333,7 +358,7 @@ function layer_onClick(event)
 	highlightTab($("#thelist li").eq(index));
 	scrollToPage(index);	
 	postSelection();
-	reveal();
+	changeState(STATE_INFO);
 }
 
 function layer_onMouseOver(event)
@@ -388,6 +413,8 @@ function handleWindowResize() {
 	$("#case #wrapper").height($("#case").height() - $("#topRow").height() - $("#bottomRow").height() - 3);
 	$("#case #blot").width($("#leftPane").width() - 40);	
 	$("#case #blot").height($("#leftPane").height() - $("#topRow").height() - 21);
+	
+	$("#intro").width($("#leftPane").width()-70);
 		
 	$(mapView).height($("body").height() - $("#header").height());
 	$(mapView).width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
