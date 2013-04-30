@@ -358,7 +358,7 @@ function layer_onClick(event)
 	highlightTab($("#thelist li").eq(index));
 	scrollToPage(index);	
 	postSelection();
-	changeState(STATE_INFO);
+	if (_currentState != STATE_INFO) changeState(STATE_INFO);
 }
 
 function layer_onMouseOver(event)
@@ -451,13 +451,11 @@ function preSelection() {
 
 function postSelection()
 {
-	
-	if (_mapSat.getLevel() == 15) {
-		_mapSat.centerAt(_selected.geometry);
-	}
-	else {
-		_mapSat.centerAndZoom(_selected.geometry, 15);
-	}
+
+	// this is a work-around because centerAndZoom was causing WAY too many tiles to be fetched.
+	_mapSat.getLayer(_mapSat.layerIds[0]).hide();
+	_mapSat.setLevel(3)
+	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, 15);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
 		
 	// make the selected location's icon BIG
 	var height = _lutIconSpecs["large"].getHeight();
