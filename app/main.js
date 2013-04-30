@@ -132,9 +132,6 @@ function init() {
 
 function initMap() {
 
-	_mapOV.setLevel(2);
-	
-	handleWindowResize();
 	
 	$("#case #blot").css("left", $("#case").width());
 	
@@ -143,7 +140,8 @@ function initMap() {
 	setTimeout(function(){
 		if(_scroll){_scroll.refresh()}
 		_mapSat.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));
-		_mapOV.centerAt(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)));		
+		_mapOV.centerAndZoom(new esri.geometry.Point(0,0,new esri.SpatialReference(4326)), 2);		
+		$("#whiteOut").fadeOut("slow");		
 	},500);
 
 	// jQuery event assignment
@@ -400,8 +398,8 @@ function handleWindowResize() {
 		$("#thelist").height($("#wrapper").height());
 	}
 	
-	_mapSat.resize();
-	_mapOV.resize();
+	if (_mapSat) _mapSat.resize();
+	if (_mapOV) _mapOV.resize();
 	
 }
 
