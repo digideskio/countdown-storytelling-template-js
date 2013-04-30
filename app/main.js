@@ -7,8 +7,8 @@ dojo.require("esri.map");
 ***************** begin config section ****************
 *******************************************************/
 
-var TITLE = "World's Largest Container Ports"
-var BYLINE = "This is the byline"
+var TITLE = "Giant container ports stictch together the global economy"
+var BYLINE = "The fifty largest ports link six continents and countless supply chains."
 var WEBMAP_ID = "e119cddd0c1a4ca9b1d87df57d0c62fb";
 var LOCATIONS_LAYER_ID = "csv_2334_0";
 
