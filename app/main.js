@@ -9,8 +9,8 @@ dojo.require("esri.map");
 
 var TITLE = "Giant container ports stitch together the global economy"
 var BYLINE = "The fifty largest ports link six continents and countless supply chains."
-var WEBMAP_ID = "e119cddd0c1a4ca9b1d87df57d0c62fb";
-var LOCATIONS_LAYER_ID = "csv_2334_0";
+var WEBMAP_ID = "930979c835f44746b67538b9cd4d2d04";
+var LOCATIONS_LAYER_ID = "csv_1443_0";
 
 var BASEMAP_SERVICE_NATGEO = "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer";
 var BASEMAP_SERVICE_SATELLITE = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
@@ -456,7 +456,7 @@ function postSelection()
 	// this is a work-around because centerAndZoom was causing WAY too many tiles to be fetched.
 	_mapSat.getLayer(_mapSat.layerIds[0]).hide();
 	_mapSat.setLevel(3)
-	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, 15);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
+	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, _selected.attributes.Level);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
 		
 	// make the selected location's icon BIG
 	var height = _lutIconSpecs["large"].getHeight();
