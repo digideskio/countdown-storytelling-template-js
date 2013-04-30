@@ -329,12 +329,3 @@ a:hover{
 .esriPopup{
 	display: none;
 }
-
-#switchMaps {
-	position:absolute;
-	background-color:#CCC;
-	z-index:1000;
-	padding:5px;
-	cursor:pointer;
-	right:0px;	
-}

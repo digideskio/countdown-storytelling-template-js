@@ -164,7 +164,7 @@ function initMap() {
 			
 	$("li").click(listItemClick);
 	
-	$("#switchMaps").click(function(e) {
+	$("#flipper").click(function(e) {
 		switchMaps();
 	});		
 
@@ -261,7 +261,10 @@ function pageUp()
 function reveal()
 {
 	setTimeout(function(){$("#blot").animate({left:40},"slow",null,function(){
-		_mapOV.resize(); transfer();
+		_mapOV.resize(); 
+		_mapSat.resize();
+		$("#flipper").fadeIn("slow");
+		transfer();
 	})}, 400);	
 }
 
@@ -393,6 +396,7 @@ function handleWindowResize() {
 	
 	$(mapNav).width($("#case #blot #inner").width());
 	$(mapNav).height($("#case #blot #inner").height() - ($("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
+	$("#flipper").css("top", $("#info").height() + ($(mapNav).height() / 2) + ($("#flipper").height() / 2));
 	
 	if (!_scroll) {
 		$("#thelist").height($("#wrapper").height());
@@ -451,6 +455,7 @@ function backToList()
 {
 	$(".numberDiv").removeClass("selected");
 	$(".nameDiv").removeClass("selected");
+	$("#flipper").hide();
 	$("#case #blot").animate({left:$("#case").width()});
 }
 
