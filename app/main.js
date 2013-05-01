@@ -416,6 +416,7 @@ function handleWindowResize() {
 	$("#case #blot").height($("#leftPane").height() - $("#topRow").height() - 21);
 	
 	$("#intro").width($("#leftPane").width()-70);
+	$("#intro").height($("#leftPane").height());
 		
 	$(mapView).height($("body").height() - $("#header").height());
 	$(mapView).width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
