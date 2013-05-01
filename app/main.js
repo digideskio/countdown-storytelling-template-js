@@ -111,7 +111,10 @@ function init() {
 		loadList();
 		
 		if (!_isLegacyIE) {
-			_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
+			if (_isMobile)
+				_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
+			else 
+				_scroll = new iScroll('wrapper', {snap:'li',momentum:true, vScrollbar:false});
 		} else {
 			$("#wrapper").css("overflow", "hidden");
 			$("#thelist").css("overflow", "hidden");
