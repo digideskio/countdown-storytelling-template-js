@@ -343,6 +343,7 @@ function loadList()
 			spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
 		);
 	   numDiv = $("<div class='numberDiv'>"+value.attributes.RANK+"</div>");
+	   $(numDiv).attr("title", "#"+value.attributes.RANK+": "+value.attributes.PORT+", "+value.attributes.COUNTRY);
 	   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.PORT+", "+value.attributes.COUNTRY+"</span></div>");
 	   li = $("<li></li>");
 	   $(li).append(numDiv);
