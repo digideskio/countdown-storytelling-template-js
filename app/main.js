@@ -185,7 +185,15 @@ function initMap() {
 		$("#mapOV .esriSimpleSlider").fadeIn();
 	},function(e) {
 		$("#mapOV .esriSimpleSlider").fadeOut();
-	})
+	});
+	
+	$("#iconHome").click(function(e) {
+        changeState(STATE_INTRO);
+    });
+	
+	$("#iconLeft").click(function(e) {
+        changeState(STATE_INFO);
+    });
 
 }
 
@@ -284,23 +292,56 @@ function reveal(retractIntro)
 
 function changeState(toState)
 {
+	
 	if (toState == STATE_TABLE) {
 		if (_currentState == STATE_INTRO) {
 			$("#intro").animate({left:500},"slow");
-		} else {
+		} else if (_currentState == STATE_INFO) {
 			$("#flipper").hide();
 			$("#case #blot").animate({left:$("#case").width()});
+		} else if (_currentState == STATE_TABLE) {
+			// redundant
+		} else {
+			throwStateException(_currentState);
 		}
 		$("#iconList").hide();
-	} else {
+		$("#iconLeft").show();
+	} else if (toState == STATE_INFO) {
 		if (_currentState == STATE_INTRO) {
 			reveal(true);
-		} else {
+		} else if (_currentState == STATE_TABLE) {
 			reveal(false);
+		} else if (_currentState == STATE_INFO) {
+			// redundant
+		} else {
+			throwStateException(_currentState);
 		}
+		$("#iconLeft").hide();
 		$("#iconList").show();
+	} else if (toState == STATE_INTRO) {
+		if (_currentState == STATE_TABLE) {
+			$("#intro").animate({left:41},"slow");
+		} else if (_currentState == STATE_INFO) {
+			$("#intro").animate({left:41},"slow",function(){
+				$("#case #blot").animate({left:$("#case").width()});
+			});
+			$("#flipper").hide();
+		} else if (_currentState == STATE_INTRO) {
+			// redundant
+		} else {
+			throwStateException(_currentState)
+		}
+	} else {
+		throwStateException(toState);
 	}
+	
 	_currentState = toState;
+	
+}
+
+function throwStateException(allegedState)
+{
+	throw("invalid state: ", allegedState);
 }
 
 function switchMaps()
