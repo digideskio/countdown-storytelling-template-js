@@ -322,6 +322,9 @@ function switchMaps()
 		setTimeout(function(){
 			_mapSat.centerAt(_selected.geometry);
 			_mapOV.centerAt(_selected.geometry);
+			setTimeout(function(){
+				moveGraphicToFront(_selected);
+			},500);
 		},500);
 	}
 	
@@ -478,7 +481,12 @@ function postSelection()
 	
 	transfer();
 	
-	setTimeout(function(){moveGraphicToFront(_selected);_mapOV.centerAt(_selected.geometry)},500);
+	setTimeout(function(){
+		_mapOV.centerAt(_selected.geometry);
+		setTimeout(function(){
+			moveGraphicToFront(_selected);			
+		}, 500)
+	},500);
 	
 }
 
