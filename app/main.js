@@ -30,6 +30,8 @@ var _popup;
 var _divMapRight;
 var _divMapLeft;
 
+var _introScroller;
+
 var _lutIconSpecs = {
 	normal:new IconSpecs(22,28,3,8),
 	medium:new IconSpecs(24,30,3,8),
@@ -112,6 +114,8 @@ function init() {
 		
 		if (_isMobile) {
 			_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
+			$("#innerIntro").height(1000);
+			_introScroller = new iScroll('intro');
 		} else {
 			$("#wrapper").css("overflow", "hidden");
 			$("#thelist").css("overflow-x", "hidden");

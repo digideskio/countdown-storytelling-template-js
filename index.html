@@ -81,7 +81,7 @@
         	<div id="table">
                 <div id="topRow">
                     <div class="numberDiv" style="font-size:16px"><img src="resources/images/PointerUp.png" style="margin-top:10px" /></div>
-                    <img id="iconList" src="resources/images/ListIcon.png"/>
+                    <img id="iconList" style="top:0px;left:40px;position:absolute" src="resources/images/ListIcon.png"/>
                 </div>         
                 <div id="wrapper">
                     <ul id="thelist"></ul>
@@ -101,6 +101,7 @@
             </div>  
             
             <div id="intro">
+            	<div id="innerIntro"> <!--needs to be here for iScroll; otherwise, it's unneccessary level of div hierarchy-->
 <img src="resources/images/container.jpg" style="padding-left:0px;max-width:300px;"/>
 <p>
 They're hauled on trucks and trains and stacked by the thousands onto freighters.  They're the red corpuscles of international trade.  They're called intermodal containers, and they're the basis of the unit by which container terminals are measured.
@@ -114,6 +115,7 @@ When viewed from above, container ports are variations on a theme:  Stockpiles o
 <br />
 <a href="javascript:changeState(STATE_TABLE)" style="padding-left:50px;color:#de4c35;padding-bottom:40px">Explore ports</a>
 <br />
+                </div>
             </div>
               
 
