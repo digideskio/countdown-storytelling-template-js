@@ -222,7 +222,7 @@ function onKeyDown(e)
 
 function listItemClick(e) 
 {
-	if ($(this).find(".numberDiv").hasClass("selected")) {
+	if ($(this).find(".numberDiv").hasClass("selected") && (_currentState != STATE_TABLE)) {
 		changeState(STATE_TABLE);
 	} else {
 		
@@ -233,7 +233,7 @@ function listItemClick(e)
 		_selected = _locations[index];
 		postSelection();
 
-		changeState(STATE_INFO);				
+		if (_currentState != STATE_INFO) changeState(STATE_INFO);				
 		
 	}
 }
@@ -288,7 +288,8 @@ function changeState(toState)
 		if (_currentState == STATE_INTRO) {
 			$("#intro").animate({left:500},"slow");
 		} else {
-			backToList();
+			$("#flipper").hide();
+			$("#case #blot").animate({left:$("#case").width()});
 		}
 	} else {
 		if (_currentState == STATE_INTRO) {
@@ -492,15 +493,6 @@ function postSelection()
 		}, 500)
 	},500);
 	
-}
-
-
-function backToList() 
-{
-	$(".numberDiv").removeClass("selected");
-	$(".nameDiv").removeClass("selected");
-	$("#flipper").hide();
-	$("#case #blot").animate({left:$("#case").width()});
 }
 
 function hoverInfoPos(x,y){
