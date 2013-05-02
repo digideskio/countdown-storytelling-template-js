@@ -291,12 +291,14 @@ function changeState(toState)
 			$("#flipper").hide();
 			$("#case #blot").animate({left:$("#case").width()});
 		}
+		$("#iconList").hide();
 	} else {
 		if (_currentState == STATE_INTRO) {
 			reveal(true);
 		} else {
 			reveal(false);
 		}
+		$("#iconList").show();
 	}
 	_currentState = toState;
 }
