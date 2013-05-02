@@ -239,6 +239,7 @@ a:hover{
 }
 
 #case #wrapper li {
+	position:relative;
 	height:40px;
 	line-height:40px;
 	border-bottom:1px solid #ccc;
@@ -251,9 +252,10 @@ a:hover{
 }
 
 #case .numberDiv {
-	float:left;
+	position:absolute;
 	width:40px;
 	height:40px;
+	top:0px;
 	text-align:center;
 	font-size:30px;
 	background-color:#7c7c7c;
@@ -262,8 +264,10 @@ a:hover{
 }
 
 #case .nameDiv {
-	float:left;
+	position:absolute;
 	height:40px;
+	left:40px;
+	top:0px;
 	width:100%;
 	background-color:#e4e4e4;
 }

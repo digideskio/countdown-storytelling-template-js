@@ -110,14 +110,12 @@ function init() {
 		
 		loadList();
 		
-		if (!_isLegacyIE) {
-			if (_isMobile)
-				_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
-			else 
-				_scroll = new iScroll('wrapper', {snap:'li',momentum:true, vScrollbar:false});
+		if (_isMobile) {
+			_scroll = new iScroll('wrapper', {snap:'li',momentum:true});
 		} else {
 			$("#wrapper").css("overflow", "hidden");
-			$("#thelist").css("overflow", "hidden");
+			$("#thelist").css("overflow-x", "hidden");
+			$("#thelist").css("overflow-y", "scroll");			
 		}
 
 		$("#mapOV .esriSimpleSlider").hide();	
