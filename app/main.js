@@ -446,15 +446,6 @@ function handleWindowResize() {
 	
 	if (($("body").height() <= 500) || ($("body").width() <= 900)) $("#header").height(0);
 	else $("#header").height(115);
-
-	var mapView, mapNav;
-	if ($("#inner").find("#mapOV").length > 0) {
-		mapView = $("#map");
-		mapNav = $("#mapOV");
-	} else {
-		mapView = $("#mapOV");
-		mapNav = $("#map");
-	}
 	
 	$("#leftPane").height($("body").height() - $("#header").height());
 	$("#leftPane").width(parseInt($("body").width() * .4));
@@ -472,14 +463,14 @@ function handleWindowResize() {
 	$("#intro").width($("#leftPane").width()-70);
 	$("#intro").height($("#leftPane").height());
 		
-	$(mapView).height($("body").height() - $("#header").height());
-	$(mapView).width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
+	$(_divMapLeft).height($("body").height() - $("#header").height());
+	$(_divMapLeft).width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
 	
 	$("#case #blot #inner").height($("#case #blot").height() - (parseInt($("#case #blot #inner").css("margin-top")) + parseInt($("#case #blot #inner").css("margin-bottom"))));
 	
-	$(mapNav).width($("#case #blot #inner").width());
-	$(mapNav).height($("#case #blot #inner").height() - ($("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
-	$("#flipper").css("top", $("#info").height() + ($(mapNav).height() / 2) + ($("#flipper").height() / 2));
+	$(_divMapRight).width($("#case #blot #inner").width());
+	$(_divMapRight).height($("#case #blot #inner").height() - ($("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
+	$("#flipper").css("top", $("#info").height() + ($(_divMapRight).height() / 2) + ($("#flipper").height() / 2));
 	
 	if (!_scroll) {
 		$("#thelist").height($("#wrapper").height());
