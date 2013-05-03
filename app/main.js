@@ -151,7 +151,7 @@ function initMap() {
 
 	setTimeout(function(){
 		if(_scroll){_scroll.refresh()}
-		var pt = new esri.geometry.Point(12,0,new esri.SpatialReference(4326));
+		var pt = new esri.geometry.Point(12,25,new esri.SpatialReference(4326));
 		var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? 3 : 2;
 		_mapSat.centerAt(pt);
 		_mapOV.centerAndZoom(pt, level);		
