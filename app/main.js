@@ -52,7 +52,8 @@ var _dojoReady = false;
 var _jqueryReady = false;
 
 var _isMobile = isMobile();
-var _isLegacyIE = ((navigator.appVersion.indexOf("MSIE 8") > -1) || (navigator.appVersion.indexOf("MSIE 8") > -1));
+var _isLegacyIE = ((navigator.appVersion.indexOf("MSIE 8") > -1) || (navigator.appVersion.indexOf("MSIE 7") > -1));
+var _isIE = (navigator.appVersion.indexOf("MSIE") > -1)
 
 var _isEmbed = false;
 
@@ -423,7 +424,7 @@ function layer_onMouseOver(event)
 	if (graphic != _selected) {
 		graphic.setSymbol(graphic.symbol.setHeight(spec.getHeight()).setWidth(spec.getWidth()).setOffset(spec.getOffsetX(), spec.getOffsetY()));
 	}
-	moveGraphicToFront(graphic);	
+	if (!_isIE) moveGraphicToFront(graphic);	
 	_mapOV.setMapCursor("pointer");
 	$("#hoverInfo").html(graphic.attributes.PORT);
 	var pt = _mapOV.toScreen(graphic.geometry);
