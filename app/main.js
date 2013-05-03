@@ -292,7 +292,7 @@ function reveal(retractIntro)
 
 function changeState(toState)
 {
-	
+
 	if (toState == STATE_TABLE) {
 		if (_currentState == STATE_INTRO) {
 			$("#intro").animate({left:500},"slow");
@@ -305,7 +305,6 @@ function changeState(toState)
 			throwStateException(_currentState);
 		}
 		$("#iconList").hide();
-		$("#iconLeft").show();
 	} else if (toState == STATE_INFO) {
 		if (_currentState == STATE_INTRO) {
 			reveal(true);
