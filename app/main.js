@@ -463,14 +463,14 @@ function handleWindowResize() {
 	$("#intro").width($("#leftPane").width()-70);
 	$("#intro").height($("#leftPane").height());
 		
-	$(_divMapLeft).height($("body").height() - $("#header").height());
-	$(_divMapLeft).width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
+	$(_divMapRight).height($("body").height() - $("#header").height());
+	$(_divMapRight).width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
 	
 	$("#case #blot #inner").height($("#case #blot").height() - (parseInt($("#case #blot #inner").css("margin-top")) + parseInt($("#case #blot #inner").css("margin-bottom"))));
 	
-	$(_divMapRight).width($("#case #blot #inner").width());
-	$(_divMapRight).height($("#case #blot #inner").height() - ($("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
-	$("#flipper").css("top", $("#info").height() + ($(_divMapRight).height() / 2) + ($("#flipper").height() / 2));
+	$(_divMapLeft).width($("#case #blot #inner").width());
+	$(_divMapLeft).height($("#case #blot #inner").height() - ($("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
+	$("#flipper").css("top", $("#info").height() + ($(_divMapLeft).height() / 2) + ($("#flipper").height() / 2));
 	
 	if (!_scroll) {
 		$("#thelist").height($("#wrapper").height());
