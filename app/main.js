@@ -464,7 +464,7 @@ function handleWindowResize() {
 	$("#intro").height($("#leftPane").height());
 		
 	$(_divMapRight).height($("body").height() - $("#header").height());
-	$(_divMapRight).width($("body").width() - $("#leftPane").width() - parseInt($("#leftPane").css("border-right-width")));
+	$(_divMapRight).width($("body").width() - $("#leftPane").width());
 	
 	$("#case #blot #inner").height($("#case #blot").height() - (parseInt($("#case #blot #inner").css("margin-top")) + parseInt($("#case #blot #inner").css("margin-bottom"))));
 	
