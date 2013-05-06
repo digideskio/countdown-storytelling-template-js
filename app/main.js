@@ -45,8 +45,10 @@ var STATE_INFO = 2;
 var _currentState = STATE_INTRO;
 
 var ICON_RED_PREFIX = "resources/icons/red/NumberIcon";
-var ICON_BLUE_PREFIX = "resources/icons/blue/NumberIconb";
-var ICON_SUFFIX = ".png";
+var ICON_RED_SUFFIX = ".png";
+
+var ICON_BLUE_PREFIX = "resources/icons/dim_red/NumberIcon";
+var ICON_BLUE_SUFFIX = "d.png";
 
 var _dojoReady = false;
 var _jqueryReady = false;
@@ -383,7 +385,7 @@ function loadList()
 	var spec = _lutIconSpecs.normal;
 	$.each(_locations, function(index, value) {
 		value.setSymbol(new esri.symbol.PictureMarkerSymbol(
-			ICON_BLUE_PREFIX+value.attributes.RANK+ICON_SUFFIX, 
+			ICON_BLUE_PREFIX+value.attributes.RANK+ICON_BLUE_SUFFIX, 
 			spec.getWidth(), 
 			spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
 		);
@@ -491,7 +493,7 @@ function preSelection() {
 		var width = _lutIconSpecs["normal"].getWidth();
 		var offset_x = _lutIconSpecs["normal"].getOffsetX()
 		var offset_y = _lutIconSpecs["normal"].getOffsetY();
-		var url = ICON_BLUE_PREFIX+_selected.attributes.RANK+ICON_SUFFIX;
+		var url = ICON_BLUE_PREFIX+_selected.attributes.RANK+ICON_BLUE_SUFFIX;
 		_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x,offset_y).setUrl(url));
 	}
 	
@@ -510,7 +512,7 @@ function postSelection()
 	var width = _lutIconSpecs["large"].getWidth();
 	var offset_x = _lutIconSpecs["large"].getOffsetX()
 	var offset_y = _lutIconSpecs["large"].getOffsetY();
-	var url = ICON_RED_PREFIX+_selected.attributes.RANK+ICON_SUFFIX;	
+	var url = ICON_RED_PREFIX+_selected.attributes.RANK+ICON_RED_SUFFIX;	
 	
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y).setUrl(url));
 	
