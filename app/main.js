@@ -451,7 +451,7 @@ function layer_onMouseOut(event)
 
 function handleWindowResize() {
 	
-	if (($("body").height() <= 500) || ($("body").width() <= 900)) $("#header").height(0);
+	if (($("body").height() <= 600) || ($("body").width() <= 1000)) $("#header").height(0);
 	else $("#header").height(115);
 	
 	$("#leftPane").height($("body").height() - $("#header").height());
