@@ -61,7 +61,6 @@
 <script type="text/javascript" src="lib/iscroll.js"></script>
 
 <script type="text/javascript">var djConfig = {parseOnLoad: true};</script>
-<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.4"></script>
 <script type="text/javascript" src="app/utils/helper_functions.js"></script>
 
 <!--Social Media Links-->
@@ -86,6 +85,28 @@
 </script>
 <!--Google Analytics End-->
 
+<script type="text/javascript">
+	var dojoConfig = {
+		parseOnLoad: true,
+		isDebug: false,
+		packages: [
+		{
+			name: 'storymaps',
+			location: location.pathname.replace(/\/[^/]+$/, '/') + 'app'
+		}
+		]
+	};
+</script>
+
+<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.4"></script>
+
+<script type="text/javascript">
+
+	//GET Application Config
+	require(["storymaps/config"]);
+
+</script>
+		
 <script type="text/javascript" src="app/utils/IconSpecs.js"></script>
 <script type="text/javascript" src="app/main.js"></script>
 

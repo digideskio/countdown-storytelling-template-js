@@ -3,22 +3,6 @@ dojo.require("dijit.layout.ContentPane");
 dojo.require("esri.arcgis.utils");
 dojo.require("esri.map");
 
-/******************************************************
-***************** begin config section ****************
-*******************************************************/
-
-var TITLE = "Giant container ports stitch together the global economy"
-var BYLINE = "The fifty largest ports link six continents and countless supply chains."
-var WEBMAP_ID = "930979c835f44746b67538b9cd4d2d04";
-var LOCATIONS_LAYER_ID = "csv_1443_0";
-
-var BASEMAP_SERVICE_NATGEO = "http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer";
-var BASEMAP_SERVICE_SATELLITE = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
-
-/******************************************************
-***************** end config section ******************
-*******************************************************/
-
 var _mapSat;
 var _mapOV;
 var _scroll;
