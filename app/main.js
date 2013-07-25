@@ -78,7 +78,7 @@ function init() {
 	
 	_popup = new esri.dijit.Popup(null, dojo.create("div"));
 
-	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "mapOV", {
+	var mapDeferred = esri.arcgis.utils.createMap(_configOptions.webmap, "mapOV", {
 		mapOptions: {
 			slider: true,
 			wrapAround180: true
