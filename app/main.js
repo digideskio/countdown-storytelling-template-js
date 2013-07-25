@@ -57,9 +57,6 @@ function init() {
 	if (!_jqueryReady) return;
 	if (!_dojoReady) return;
 
-	$("#title").append(TITLE);
-	$("#subtitle").append(BYLINE);	
-		
 	_divMapRight = $("#map");
 	_divMapLeft = $("#mapOV");
 	
@@ -91,7 +88,13 @@ function init() {
 	});
 	
 	mapDeferred.addCallback(function(response) {	  
-
+		
+		if ((_configOptions.title == null) || (_configOptions.title == "")) _configOptions.title = response.itemInfo.item.title;
+		if ((_configOptions.subtitle == null) || (_configOptions.subtitle == "")) _configOptions.subtitle = response.itemInfo.item.snippet;
+		
+		$("#title").append(_configOptions.title);
+		$("#subtitle").append(_configOptions.subtitle);	
+		
 		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
 
