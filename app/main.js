@@ -107,7 +107,8 @@ function init() {
 		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
 
-		_sourceLayer = _mapOV.getLayer(LOCATIONS_LAYER_ID);
+		var sourceID = $.grep(response.itemInfo.itemData.operationalLayers, function(n, i){return n.title == _configOptions.contentLayer})[0].featureCollection.layers[0].id;
+		_sourceLayer = _mapOV.getLayer($.grep(_mapOV.graphicsLayerIds, function(n,i){return _mapOV.getLayer(n).id == sourceID})[0]);
 		_locations = _sourceLayer.graphics;
 		
 		loadList();
@@ -141,7 +142,7 @@ function init() {
 }
 
 function initMap() {
-
+	
 	if (!_mapSat || !_mapOV) {
 		// kicking out because one of the maps doesn't exist yet...
 		return null;
