@@ -159,15 +159,14 @@ function initMap() {
 
 	setTimeout(function(){
 		if(_scroll){_scroll.refresh()}
-		var pt = new esri.geometry.Point(12,25,new esri.SpatialReference(4326));
 		var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? 3 : 2;
-		_mapSat.centerAt(pt);
+		_mapSat.centerAt(_configOptions.initialCenter);
 		if (!_isLegacyIE) {
-			_mapOV.centerAndZoom(pt, level);		
+			_mapOV.centerAndZoom(_configOptions.initialCenter, level);		
 			$("#whiteOut").fadeOut("slow");		
 		} else {
-			_mapOV.centerAndZoom(pt, 12);	
-			setTimeout(function(){_mapOV.centerAndZoom(pt, level); $("#whiteOut").fadeOut("slow");}, 1000);	
+			_mapOV.centerAndZoom(_configOptions.initialCenter, 12);	
+			setTimeout(function(){_mapOV.centerAndZoom(_configOptions.initialCenter, level); $("#whiteOut").fadeOut("slow");}, 1000);	
 		}
 	},500);
 
