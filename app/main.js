@@ -159,7 +159,7 @@ function initMap() {
 
 	setTimeout(function(){
 		if(_scroll){_scroll.refresh()}
-		var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? 3 : 2;
+		var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? _configOptions.initialZoomLevelWide : _configOptions.initialZoomLevel;
 		_mapSat.centerAt(_configOptions.initialCenter);
 		if (!_isLegacyIE) {
 			_mapOV.centerAndZoom(_configOptions.initialCenter, level);		
