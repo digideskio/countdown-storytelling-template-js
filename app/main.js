@@ -72,13 +72,22 @@ function init() {
 			}
 		}
 	}
-		
-	_mapSat = new esri.Map("map");
-	_mapSat.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_SERVICE_SATELLITE));
 	
 	_popup = new esri.dijit.Popup(null, dojo.create("div"));
+	
+	var mapLargeScale = esri.arcgis.utils.createMap(_configOptions.webmap_largescale, "map", {mapOptions: {slider: true, wrapAround180: true}});
+	mapLargeScale.addCallback(function(response) {
+		_mapSat = response.map;
+		if(_mapSat.loaded){
+			initMap();
+		} else {
+			dojo.connect(_mapSat,"onLoad",function(){
+				initMap();
+			});
+		}
+	});
 
-	var mapDeferred = esri.arcgis.utils.createMap(_configOptions.webmap, "mapOV", {
+	var mapDeferred = esri.arcgis.utils.createMap(_configOptions.webmap_overview, "mapOV", {
 		mapOptions: {
 			slider: true,
 			wrapAround180: true
@@ -133,7 +142,16 @@ function init() {
 
 function initMap() {
 
+	if (!_mapSat || !_mapOV) {
+		// kicking out because one of the maps doesn't exist yet...
+		return null;
+	}
 	
+	if (!_mapSat.loaded || !_mapOV.loaded) {
+		// kicking out because one of the maps hasn't loaded yet...
+		return null;
+	}
+
 	$("#case #blot").css("left", $("#case").width());
 	
 	switchMaps();
