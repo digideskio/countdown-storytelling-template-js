@@ -341,13 +341,9 @@ function throwStateException(allegedState)
 function switchMaps()
 {
 	
-	if ($(_divMapRight).attr("id") == $("#map").attr("id")) {
-		_divMapRight = $("#mapOV");
-		_divMapLeft = $("#map");
-	} else {
-		_divMapRight = $("#map");
-		_divMapLeft = $("#mapOV");
-	}
+	var temp = _divMapRight;
+	_divMapRight = _divMapLeft;
+	_divMapLeft = temp;
 	
 	$(_divMapRight).detach();
 	$(_divMapLeft).detach();
