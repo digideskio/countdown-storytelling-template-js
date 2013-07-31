@@ -22,6 +22,9 @@ var _lutIconSpecs = {
 	large:new IconSpecs(32,40,3,11)
 }
 
+var FIELDNAME_RANK = "RANK";
+var FIELDNAME_NAME = "PORT";
+
 var STATE_INTRO = 0;
 var STATE_TABLE = 1;
 var STATE_INFO = 2;
@@ -213,7 +216,7 @@ function initMap() {
 function transfer()
 {
 	var arr = $.grep(_sourceLayer.graphics, function(n, i){
-		return n.attributes.PORT == _selected.attributes.PORT
+		return n.attributes[FIELDNAME_NAME] == _selected.attributes[FIELDNAME_NAME];
 	});
 	_mapOV.infoWindow.setFeatures([arr[0]]);
 	_mapOV.infoWindow.show();
@@ -391,13 +394,13 @@ function loadList()
 	var spec = _lutIconSpecs.normal;
 	$.each(_locations, function(index, value) {
 		value.setSymbol(new esri.symbol.PictureMarkerSymbol(
-			ICON_BLUE_PREFIX+value.attributes.RANK+ICON_BLUE_SUFFIX, 
+			ICON_BLUE_PREFIX+value.attributes[FIELDNAME_RANK]+ICON_BLUE_SUFFIX, 
 			spec.getWidth(), 
 			spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
 		);
-	   numDiv = $("<div class='numberDiv'>"+value.attributes.RANK+"</div>");
-	   $(numDiv).attr("title", "#"+value.attributes.RANK+": "+value.attributes.PORT+", "+value.attributes.COUNTRY);
-	   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.PORT+", "+value.attributes.COUNTRY+"</span></div>");
+	   numDiv = $("<div class='numberDiv'>"+value.attributes[FIELDNAME_RANK]+"</div>");
+	   $(numDiv).attr("title", "#"+value.attributes[FIELDNAME_RANK]+": "+value.attributes[FIELDNAME_NAME]);
+	   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes[FIELDNAME_NAME]+"</span></div>");
 	   li = $("<li></li>");
 	   $(li).append(numDiv);
 	   $(li).append(nameDiv);
@@ -434,7 +437,7 @@ function layer_onMouseOver(event)
 	}
 	if (!_isIE) moveGraphicToFront(graphic);	
 	_mapOV.setMapCursor("pointer");
-	$("#hoverInfo").html(graphic.attributes.PORT);
+	$("#hoverInfo").html(graphic.attributes[FIELDNAME_NAME]);
 	var pt = _mapOV.toScreen(graphic.geometry);
 	hoverInfoPos(pt.x, pt.y);	
 }
@@ -499,7 +502,7 @@ function preSelection() {
 		var width = _lutIconSpecs["normal"].getWidth();
 		var offset_x = _lutIconSpecs["normal"].getOffsetX()
 		var offset_y = _lutIconSpecs["normal"].getOffsetY();
-		var url = ICON_BLUE_PREFIX+_selected.attributes.RANK+ICON_BLUE_SUFFIX;
+		var url = ICON_BLUE_PREFIX+_selected.attributes[FIELDNAME_RANK]+ICON_BLUE_SUFFIX;
 		_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x,offset_y).setUrl(url));
 	}
 	
@@ -518,13 +521,9 @@ function postSelection()
 	var width = _lutIconSpecs["large"].getWidth();
 	var offset_x = _lutIconSpecs["large"].getOffsetX()
 	var offset_y = _lutIconSpecs["large"].getOffsetY();
-	var url = ICON_RED_PREFIX+_selected.attributes.RANK+ICON_RED_SUFFIX;	
+	var url = ICON_RED_PREFIX+_selected.attributes[FIELDNAME_RANK]+ICON_RED_SUFFIX;	
 	
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y).setUrl(url));
-	
-	$("#label").empty();
-	$("#label").append("<span class='number'>"+_selected.attributes.RANK+".</span> <span class='title'>"+_selected.attributes.PORT+", "+_selected.attributes.COUNTRY+"</span>");			
-	handleWindowResize();  // because the height of the label may have changed, the ov map may need resizing...		
 	
 	transfer();
 	
