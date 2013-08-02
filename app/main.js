@@ -155,6 +155,10 @@ function initMap() {
 		// kicking out because one of the maps hasn't loaded yet...
 		return null;
 	}
+	
+    //mark the initial center, because maps are about to get resized, 
+	//and we may need to re-establish the center.
+	initialCenter = _mapOV.extent.getCenter();
 
 	$("#case #blot").css("left", $("#case").width());
 	
@@ -163,13 +167,13 @@ function initMap() {
 	setTimeout(function(){
 		if(_scroll){_scroll.refresh()}
 		var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? _configOptions.initialZoomLevelWide : _configOptions.initialZoomLevel;
-		_mapSat.centerAt(_configOptions.initialCenter);
+		_mapSat.centerAt(initialCenter);
 		if (!_isLegacyIE) {
-			_mapOV.centerAndZoom(_configOptions.initialCenter, level);		
+			_mapOV.centerAndZoom(initialCenter, level);		
 			$("#whiteOut").fadeOut("slow");		
 		} else {
-			_mapOV.centerAndZoom(_configOptions.initialCenter, 12);	
-			setTimeout(function(){_mapOV.centerAndZoom(_configOptions.initialCenter, level); $("#whiteOut").fadeOut("slow");}, 1000);	
+			_mapOV.centerAndZoom(initialCenter, 12);	
+			setTimeout(function(){_mapOV.centerAndZoom(initialCenter, level); $("#whiteOut").fadeOut("slow");}, 1000);	
 		}
 	},500);
 

@@ -13,8 +13,6 @@ define([],
 			title: "Giant container ports stitch together the global economy",
 			//Enter a subtitle, if not specified the ArcGIS.com web map's summary is used
 			subtitle: "The fifty largest ports link six continents and countless supply chains.",
-			//Initial center for overview map
-			initialCenter: new esri.geometry.Point(12,25,new esri.SpatialReference(4326)),
 			//Initial zoom level for overview map
 			initialZoomLevel: 2,
 			//Initial zoom level for wider map aspect ratios
