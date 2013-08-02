@@ -24,6 +24,7 @@ var _lutIconSpecs = {
 
 var FIELDNAME_RANK = "RANK";
 var FIELDNAME_NAME = "PORT";
+var FIELDNAME_LEVEL = "Level";
 
 var STATE_INTRO = 0;
 var STATE_TABLE = 1;
@@ -518,7 +519,9 @@ function postSelection()
 	// this is a work-around because centerAndZoom was causing WAY too many tiles to be fetched.
 	_mapSat.getLayer(_mapSat.layerIds[0]).hide();
 	_mapSat.setLevel(3)
-	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, _selected.attributes.Level);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
+	var level = _selected.attributes[FIELDNAME_LEVEL];
+	if (!level) level = _configSettings.defaultLargeScaleZoomLevel;
+	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, level);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
 		
 	// make the selected location's icon BIG
 	var height = _lutIconSpecs["large"].getHeight();
