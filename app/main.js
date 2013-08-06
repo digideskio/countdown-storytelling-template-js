@@ -22,10 +22,6 @@ var _lutIconSpecs = {
 	large:new IconSpecs(32,40,3,11)
 }
 
-var FIELDNAME_RANK = "RANK";
-var FIELDNAME_NAME = "PORT";
-var FIELDNAME_LEVEL = "Level";
-
 var STATE_INTRO = 0;
 var STATE_TABLE = 1;
 var STATE_INFO = 2;
@@ -221,7 +217,7 @@ function initMap() {
 function transfer()
 {
 	var arr = $.grep(_sourceLayer.graphics, function(n, i){
-		return n.attributes[FIELDNAME_NAME] == _selected.attributes[FIELDNAME_NAME];
+		return n.attributes[_configOptions.fieldName_Name] == _selected.attributes[_configOptions.fieldName_Name];
 	});
 	_mapOV.infoWindow.setFeatures([arr[0]]);
 	_mapOV.infoWindow.show();
@@ -399,13 +395,13 @@ function loadList()
 	var spec = _lutIconSpecs.normal;
 	$.each(_locations, function(index, value) {
 		value.setSymbol(new esri.symbol.PictureMarkerSymbol(
-			ICON_BLUE_PREFIX+value.attributes[FIELDNAME_RANK]+ICON_BLUE_SUFFIX, 
+			ICON_BLUE_PREFIX+value.attributes[_configOptions.fieldName_Rank]+ICON_BLUE_SUFFIX, 
 			spec.getWidth(), 
 			spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
 		);
-	   numDiv = $("<div class='numberDiv'>"+value.attributes[FIELDNAME_RANK]+"</div>");
-	   $(numDiv).attr("title", "#"+value.attributes[FIELDNAME_RANK]+": "+value.attributes[FIELDNAME_NAME]);
-	   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes[FIELDNAME_NAME]+"</span></div>");
+	   numDiv = $("<div class='numberDiv'>"+value.attributes[_configOptions.fieldName_Rank]+"</div>");
+	   $(numDiv).attr("title", "#"+value.attributes[_configOptions.fieldName_Rank]+": "+value.attributes[_configOptions.fieldName_Name]);
+	   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes[_configOptions.fieldName_Name]+"</span></div>");
 	   li = $("<li></li>");
 	   $(li).append(numDiv);
 	   $(li).append(nameDiv);
@@ -442,7 +438,7 @@ function layer_onMouseOver(event)
 	}
 	if (!_isIE) moveGraphicToFront(graphic);	
 	_mapOV.setMapCursor("pointer");
-	$("#hoverInfo").html(graphic.attributes[FIELDNAME_NAME]);
+	$("#hoverInfo").html(graphic.attributes[_configOptions.fieldName_Name]);
 	var pt = _mapOV.toScreen(graphic.geometry);
 	hoverInfoPos(pt.x, pt.y);	
 }
@@ -507,7 +503,7 @@ function preSelection() {
 		var width = _lutIconSpecs["normal"].getWidth();
 		var offset_x = _lutIconSpecs["normal"].getOffsetX()
 		var offset_y = _lutIconSpecs["normal"].getOffsetY();
-		var url = ICON_BLUE_PREFIX+_selected.attributes[FIELDNAME_RANK]+ICON_BLUE_SUFFIX;
+		var url = ICON_BLUE_PREFIX+_selected.attributes[_configOptions.fieldName_Rank]+ICON_BLUE_SUFFIX;
 		_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x,offset_y).setUrl(url));
 	}
 	
@@ -519,7 +515,7 @@ function postSelection()
 	// this is a work-around because centerAndZoom was causing WAY too many tiles to be fetched.
 	_mapSat.getLayer(_mapSat.layerIds[0]).hide();
 	_mapSat.setLevel(3)
-	var level = _selected.attributes[FIELDNAME_LEVEL];
+	var level = _selected.attributes[_configOptions.fieldName_Level];
 	if (!level) level = _configOptions.defaultLargeScaleZoomLevel;
 	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, level);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
 		
@@ -528,7 +524,7 @@ function postSelection()
 	var width = _lutIconSpecs["large"].getWidth();
 	var offset_x = _lutIconSpecs["large"].getOffsetX()
 	var offset_y = _lutIconSpecs["large"].getOffsetY();
-	var url = ICON_RED_PREFIX+_selected.attributes[FIELDNAME_RANK]+ICON_RED_SUFFIX;	
+	var url = ICON_RED_PREFIX+_selected.attributes[_configOptions.fieldName_Rank]+ICON_RED_SUFFIX;	
 	
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y).setUrl(url));
 	
