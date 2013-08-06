@@ -103,6 +103,7 @@ function init() {
 		
 		$("#title").append(_configOptions.title);
 		$("#subtitle").append(_configOptions.subtitle);	
+		$(document).attr("title", _configOptions.title);
 		
 		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
