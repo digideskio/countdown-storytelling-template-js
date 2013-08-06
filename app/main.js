@@ -520,7 +520,7 @@ function postSelection()
 	_mapSat.getLayer(_mapSat.layerIds[0]).hide();
 	_mapSat.setLevel(3)
 	var level = _selected.attributes[FIELDNAME_LEVEL];
-	if (!level) level = _configSettings.defaultLargeScaleZoomLevel;
+	if (!level) level = _configOptions.defaultLargeScaleZoomLevel;
 	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, level);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
 		
 	// make the selected location's icon BIG
