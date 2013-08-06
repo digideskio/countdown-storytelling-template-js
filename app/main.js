@@ -111,6 +111,8 @@ function init() {
 			$("#intro").css("display", "none");
 		}
 		
+		$("#info").height(_configOptions.popupHeight);
+		
 		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
 
