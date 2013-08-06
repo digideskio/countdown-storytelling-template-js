@@ -110,6 +110,7 @@ function init() {
 		var sourceID = $.grep(response.itemInfo.itemData.operationalLayers, function(n, i){return n.title == _configOptions.contentLayer})[0].featureCollection.layers[0].id;
 		_sourceLayer = _mapOV.getLayer($.grep(_mapOV.graphicsLayerIds, function(n,i){return _mapOV.getLayer(n).id == sourceID})[0]);
 		_locations = _sourceLayer.graphics;
+		$.each(_locations, function(index, value){value.attributes.getValueCI = getValueCI}); // assign extra method to handle case sensitivity
 		
 		loadList();
 		
@@ -217,7 +218,7 @@ function initMap() {
 function transfer()
 {
 	var arr = $.grep(_sourceLayer.graphics, function(n, i){
-		return n.attributes[_configOptions.fieldName_Name] == _selected.attributes[_configOptions.fieldName_Name];
+		return n.attributes.getValueCI(_configOptions.fieldName_Name) == _selected.attributes.getValueCI(_configOptions.fieldName_Name);
 	});
 	_mapOV.infoWindow.setFeatures([arr[0]]);
 	_mapOV.infoWindow.show();
@@ -395,13 +396,13 @@ function loadList()
 	var spec = _lutIconSpecs.normal;
 	$.each(_locations, function(index, value) {
 		value.setSymbol(new esri.symbol.PictureMarkerSymbol(
-			ICON_BLUE_PREFIX+value.attributes[_configOptions.fieldName_Rank]+ICON_BLUE_SUFFIX, 
+			ICON_BLUE_PREFIX+value.attributes.getValueCI(_configOptions.fieldName_Rank)+ICON_BLUE_SUFFIX, 
 			spec.getWidth(), 
 			spec.getHeight()).setOffset(spec.getOffsetX(), spec.getOffsetY())
 		);
-	   numDiv = $("<div class='numberDiv'>"+value.attributes[_configOptions.fieldName_Rank]+"</div>");
-	   $(numDiv).attr("title", "#"+value.attributes[_configOptions.fieldName_Rank]+": "+value.attributes[_configOptions.fieldName_Name]);
-	   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes[_configOptions.fieldName_Name]+"</span></div>");
+	   numDiv = $("<div class='numberDiv'>"+value.attributes.getValueCI(_configOptions.fieldName_Rank)+"</div>");
+	   $(numDiv).attr("title", "#"+value.attributes.getValueCI(_configOptions.fieldName_Rank)+": "+value.attributes.getValueCI(_configOptions.fieldName_Name));
+	   nameDiv = $("<div class='nameDiv'><span style='margin-left:20px'>"+value.attributes.getValueCI(_configOptions.fieldName_Name)+"</span></div>");
 	   li = $("<li></li>");
 	   $(li).append(numDiv);
 	   $(li).append(nameDiv);
@@ -438,7 +439,7 @@ function layer_onMouseOver(event)
 	}
 	if (!_isIE) moveGraphicToFront(graphic);	
 	_mapOV.setMapCursor("pointer");
-	$("#hoverInfo").html(graphic.attributes[_configOptions.fieldName_Name]);
+	$("#hoverInfo").html(graphic.attributes.getValueCI(_configOptions.fieldName_Name));
 	var pt = _mapOV.toScreen(graphic.geometry);
 	hoverInfoPos(pt.x, pt.y);	
 }
@@ -503,7 +504,7 @@ function preSelection() {
 		var width = _lutIconSpecs["normal"].getWidth();
 		var offset_x = _lutIconSpecs["normal"].getOffsetX()
 		var offset_y = _lutIconSpecs["normal"].getOffsetY();
-		var url = ICON_BLUE_PREFIX+_selected.attributes[_configOptions.fieldName_Rank]+ICON_BLUE_SUFFIX;
+		var url = ICON_BLUE_PREFIX+_selected.attributes.getValueCI(_configOptions.fieldName_Rank)+ICON_BLUE_SUFFIX;
 		_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x,offset_y).setUrl(url));
 	}
 	
@@ -515,7 +516,7 @@ function postSelection()
 	// this is a work-around because centerAndZoom was causing WAY too many tiles to be fetched.
 	_mapSat.getLayer(_mapSat.layerIds[0]).hide();
 	_mapSat.setLevel(3)
-	var level = _selected.attributes[_configOptions.fieldName_Level];
+	var level = _selected.attributes.getValueCI(_configOptions.fieldName_Level);
 	if (!level) level = _configOptions.defaultLargeScaleZoomLevel;
 	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, level);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
 		
@@ -524,7 +525,7 @@ function postSelection()
 	var width = _lutIconSpecs["large"].getWidth();
 	var offset_x = _lutIconSpecs["large"].getOffsetX()
 	var offset_y = _lutIconSpecs["large"].getOffsetY();
-	var url = ICON_RED_PREFIX+_selected.attributes[_configOptions.fieldName_Rank]+ICON_RED_SUFFIX;	
+	var url = ICON_RED_PREFIX+_selected.attributes.getValueCI(_configOptions.fieldName_Rank)+ICON_RED_SUFFIX;	
 	
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y).setUrl(url));
 	
@@ -553,4 +554,15 @@ function hoverInfoPos(x,y){
 		$("#hoverInfo").css("top",y-15+($("#hoverInfo").height()));
 	}
 	$("#hoverInfo").show();
+}
+
+function getValueCI(field) {
+	var found;
+	$.each(this,function(index,value){
+		if (index.toUpperCase() == field.toUpperCase()) {
+			found = index;
+			return false;
+		}
+	});
+	return this[found];	
 }
