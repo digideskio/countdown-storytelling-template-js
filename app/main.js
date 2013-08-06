@@ -105,6 +105,12 @@ function init() {
 		$("#subtitle").append(_configOptions.subtitle);	
 		$(document).attr("title", _configOptions.title);
 		
+		if (!_configOptions.showIntro) {
+			$("#homeBox").width(0);
+			$("#homeBox").css("overflow", "hidden");
+			$("#intro").css("display", "none");
+		}
+		
 		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
 
