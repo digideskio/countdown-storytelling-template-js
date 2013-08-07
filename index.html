@@ -93,7 +93,11 @@
 		{
 			name: 'storymaps',
 			location: location.pathname.replace(/\/[^/]+$/, '/') + 'app'
-		}
+		},
+		{
+			name: 'root',
+			location: location.pathname.replace(/\/[^/]+$/, '/')
+		}		
 		]
 	};
 </script>
@@ -103,7 +107,7 @@
 <script type="text/javascript">
 
 	//GET Application Config
-	require(["storymaps/config"]);
+	require(["root/config"]);
 
 </script>
 		
