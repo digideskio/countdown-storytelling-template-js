@@ -527,11 +527,9 @@ function postSelection()
 {
 
 	// this is a work-around because centerAndZoom was causing WAY too many tiles to be fetched.
-	_mapSat.getLayer(_mapSat.layerIds[0]).hide();
-	_mapSat.setLevel(3)
 	var level = _selected.attributes.getValueCI(_configOptions.fieldName_Level);
 	if (!level) level = _configOptions.defaultLargeScaleZoomLevel;
-	setTimeout(function(){_mapSat.centerAndZoom(_selected.geometry, level);_mapSat.getLayer(_mapSat.layerIds[0]).show()}, 500);
+	specialCenterAndZoom(_mapSat, _selected.geometry, level);
 		
 	// make the selected location's icon BIG
 	var height = _lutIconSpecs["large"].getHeight();
@@ -578,4 +576,46 @@ function getValueCI(field) {
 		}
 	});
 	return this[found];	
+}
+
+function specialCenterAndZoom(map, center, level)
+{
+	
+	/* this function is a work-around to using centerAt() at large extents.
+	   there seems to be a bug whereby the map fetches unneccesary tiles
+	   on centerAt(), so we need to make sure to turn off layers (and zoom out?)
+	   before re-centering */
+	
+	// which layers are visible?
+	
+	var visibleLayers = [];
+	
+	$.each(map.layerIds, function(index, value) {
+		if (map.getLayer(value).visible) visibleLayers.push(value);
+	});
+	
+	$.each(map.graphicsLayerIds, function(index, value) {
+		if (map.getLayer(value).visible) visibleLayers.push(value);
+	});
+	
+	// turn off visible layers
+	
+	$.each(visibleLayers, function(index, value) {
+		map.getLayer(value).hide();
+	});
+
+	map.setLevel(3);
+	setTimeout(function() {
+		map.centerAt(center);
+		setTimeout(function() {
+			map.setLevel(level);
+			map.centerAt(center);
+			setTimeout(function(){
+				// turn visible layers back on
+				$.each(visibleLayers, function(index, value) {
+					map.getLayer(value).show();
+				});
+			}, 200);
+		}, 200);
+	}, 200)
 }
