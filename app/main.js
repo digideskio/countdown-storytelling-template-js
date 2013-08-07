@@ -75,7 +75,11 @@ function init() {
 	
 	_popup = new esri.dijit.Popup(null, dojo.create("div"));
 	
-	var mapLargeScale = esri.arcgis.utils.createMap(_configOptions.webmap_largescale, "map", {mapOptions: {slider: true, wrapAround180: true}});
+	var mapLargeScale = esri.arcgis.utils.createMap(_configOptions.webmap_largescale, "map", {
+		mapOptions: {slider: true, wrapAround180: true}, 
+		ignorePopups: true
+	});
+	
 	mapLargeScale.addCallback(function(response) {
 		_mapSat = response.map;
 		if(_mapSat.loaded){
