@@ -24,7 +24,7 @@ define([],
 			defaultLargeScaleZoomLevel: 15,
 			showIntro: false,
 			popupHeight: 300,
-			infoLeftMargin: 30
+			popupLeftMargin: 30
 		}
 	}
 );
