@@ -58,6 +58,8 @@ function init() {
 	
 	if (!_jqueryReady) return;
 	if (!_dojoReady) return;
+	
+	if (_configOptions.proxyURL) esri.config.defaults.io.proxyUrl = _configOptions.proxyURL;
 
 	_divMapRight = $("#map");
 	_divMapLeft = $("#mapOV");
@@ -124,8 +126,13 @@ function init() {
 		_mapOV = response.map;		
 		_mapOV.graphics.hide();	
 
-		var sourceID = $.grep(response.itemInfo.itemData.operationalLayers, function(n, i){return n.title == _configOptions.contentLayer})[0].featureCollection.layers[0].id;
-		_sourceLayer = _mapOV.getLayer($.grep(_mapOV.graphicsLayerIds, function(n,i){return _mapOV.getLayer(n).id == sourceID})[0]);
+		if (_configOptions.contentLayerOverride) {
+			_sourceLayer = _mapOV.getLayer(_configOptions.contentLayerOverride);
+		} else {
+			var sourceID = $.grep(response.itemInfo.itemData.operationalLayers, function(n, i){return n.title == _configOptions.contentLayer})[0].featureCollection.layers[0].id;
+			_sourceLayer = _mapOV.getLayer($.grep(_mapOV.graphicsLayerIds, function(n,i){return _mapOV.getLayer(n).id == sourceID})[0]);
+		}
+
 		_locations = _sourceLayer.graphics;
 		$.each(_locations, function(index, value){value.attributes.getValueCI = getValueCI}); // assign extra method to handle case sensitivity
 		
