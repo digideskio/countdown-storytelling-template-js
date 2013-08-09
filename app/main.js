@@ -236,6 +236,7 @@ function transfer()
 	_mapOV.infoWindow.setFeatures([arr[0]]);
 	_mapOV.infoWindow.show();
 	$("#info").html($(".contentPane"));
+	$("#info .esriViewPopup").css("margin-left", _configOptions.infoLeftMargin);
 }
 
 function onKeyDown(e)

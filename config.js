@@ -10,20 +10,21 @@ define([],
 			//id for satellite (or intended large scale) web map
 			webmap_largescale: "08c8c7870b2d44e7822548cb3cc6c057", 
 			//id for overview web map; this is the map that contains the content point layer
-			webmap_overview: "930979c835f44746b67538b9cd4d2d04",
+			webmap_overview: "91e2bd1ecfb943c8af893f5eb67d6ff7",
 			//layer in overview webmap which provides the countdown content
-			contentLayer: "AAPA_PORT_RANKINGS", 
+			contentLayer: "25 Busiest Airports", 
 			fieldName_Rank: "rank",
-			fieldName_Name: "port",
+			fieldName_Name: "airport",
 			fieldName_Level: "level", 
 			//Initial zoom level for overview map
 			initialZoomLevel: 2,
 			//Initial zoom level for wider map aspect ratios
 			initialZoomLevelWide: 3,
 			//If no zoom level is encoded for the feature, use this zoom level when
-			defaultLargeScaleZoomLevel: 13,
+			defaultLargeScaleZoomLevel: 15,
 			showIntro: false,
-			popupHeight: 330
+			popupHeight: 300,
+			infoLeftMargin: 30
 		}
 	}
 );
