@@ -52,6 +52,8 @@ if (document.addEventListener) {
 	document.attachEvent('touchmove', function (e) { e.preventDefault(); }, false);
 }
 
+var _counter = 0;
+
 function init() {
 	
 	if (!_jqueryReady) return;
@@ -263,6 +265,9 @@ function onKeyDown(e)
 
 function listItemClick(e) 
 {
+	
+	if (_counter == 0) switchMaps();
+	
 	if ($(this).find(".numberDiv").hasClass("selected") && (_currentState != STATE_TABLE)) {
 		changeState(STATE_TABLE);
 	} else {
@@ -435,6 +440,7 @@ function highlightTab(tab)
 
 function layer_onClick(event)
 {
+	if (_counter == 0) switchMaps();
 	preSelection();
 	_selected = event.graphic;
 	var index = $.inArray(_selected, _locations);
@@ -543,6 +549,8 @@ function postSelection()
 	_selected.setSymbol(_selected.symbol.setHeight(height).setWidth(width).setOffset(offset_x, offset_y).setUrl(url));
 	
 	transfer();
+	
+	_counter++;
 	
 	setTimeout(function(){
 		_mapOV.centerAt(_selected.geometry);
