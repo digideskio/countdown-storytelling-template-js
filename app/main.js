@@ -242,6 +242,7 @@ function initMap() {
 			var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? _configOptions.initialZoomLevelWide : _configOptions.initialZoomLevel;
 			_mapOV.centerAndZoom(_initialCenter, level);		
 		}, 500);
+		_counter = 0;
     });
 	
 	$("#iconLeft").click(function(e) {
