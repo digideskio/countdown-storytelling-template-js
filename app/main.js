@@ -11,6 +11,8 @@ var _locations;
 var _selected;
 var _popup;
 
+var _initialCenter;
+
 var _divMapRight;
 var _divMapLeft;
 
@@ -116,8 +118,6 @@ function init() {
 		$(document).attr("title", _configOptions.title);
 		
 		if (!_configOptions.showIntro) {
-			$("#homeBox").width(0);
-			$("#homeBox").css("overflow", "hidden");
 			$("#intro").css("display", "none");
 		}
 		
@@ -180,7 +180,7 @@ function initMap() {
 	
     //mark the initial center, because maps are about to get resized, 
 	//and we may need to re-establish the center.
-	initialCenter = _mapOV.extent.getCenter();
+	_initialCenter = _mapOV.extent.getCenter();
 
 	$("#case #blot").css("left", $("#case").width());
 	
@@ -189,13 +189,13 @@ function initMap() {
 	setTimeout(function(){
 		if(_scroll){_scroll.refresh()}
 		var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? _configOptions.initialZoomLevelWide : _configOptions.initialZoomLevel;
-		_mapSat.centerAt(initialCenter);
+		_mapSat.centerAt(_initialCenter);
 		if (!_isLegacyIE) {
-			_mapOV.centerAndZoom(initialCenter, level);		
+			_mapOV.centerAndZoom(_initialCenter, level);		
 			$("#whiteOut").fadeOut("slow");		
 		} else {
-			_mapOV.centerAndZoom(initialCenter, 12);	
-			setTimeout(function(){_mapOV.centerAndZoom(initialCenter, level); $("#whiteOut").fadeOut("slow");}, 1000);	
+			_mapOV.centerAndZoom(_initialCenter, 12);	
+			setTimeout(function(){_mapOV.centerAndZoom(_initialCenter, level); $("#whiteOut").fadeOut("slow");}, 1000);	
 		}
 	},500);
 
@@ -230,7 +230,18 @@ function initMap() {
 	});
 	
 	$("#iconHome").click(function(e) {
-        changeState(STATE_INTRO);
+		preSelection();
+		if (_configOptions.showIntro) {
+	        changeState(STATE_INTRO);
+		} else {
+	        changeState(STATE_TABLE);
+		}
+		scrollToPage(0);
+		if ($(_divMapRight).attr("id") == "map") switchMaps();
+		setTimeout(function() {
+			var level = ($(_divMapRight).width() / $(_divMapRight).height() > 1.2) ? _configOptions.initialZoomLevelWide : _configOptions.initialZoomLevel;
+			_mapOV.centerAndZoom(_initialCenter, level);		
+		}, 500);
     });
 	
 	$("#iconLeft").click(function(e) {
@@ -279,12 +290,12 @@ function listItemClick(e)
 		changeState(STATE_TABLE);
 	} else {
 		
-		highlightTab(this);
 		
 		var index = $.inArray(this, $("#thelist li"));
 		preSelection();
 		_selected = _locations[index];
 		postSelection();
+		highlightTab(this);
 
 		if (_currentState != STATE_INFO) changeState(STATE_INFO);				
 		
@@ -439,8 +450,6 @@ function loadList()
 
 function highlightTab(tab) 
 {
-	$("li .nameDiv").removeClass("selected");
-	$("li .numberDiv").removeClass("selected");
 	$(tab).find(".numberDiv").addClass("selected");
 	$(tab).find(".nameDiv").addClass("selected");
 }
@@ -525,9 +534,11 @@ function handleWindowResize() {
 function preSelection() {
 	
 	// return the soon-to-be formerly selected graphic icon to normal
-	// size
+	// size; also remove highlight from table record.
 	
 	if (_selected) {
+		$("li .nameDiv").removeClass("selected");
+		$("li .numberDiv").removeClass("selected");		
 		var height = _lutIconSpecs["normal"].getHeight();
 		var width = _lutIconSpecs["normal"].getWidth();
 		var offset_x = _lutIconSpecs["normal"].getOffsetX()
