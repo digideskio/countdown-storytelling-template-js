@@ -6,5 +6,7 @@ This template presents a (ranked) list of places.  The user can explore the list
 Examples include:
 
 <a href="http://storymaps.esri.com/stories/2013/ports" target="_blank">Ports Story</a>
+<br>
 <a href="http://storymaps.esri.com/stories/2013/refugee-camps" target="_blank">Refugee Camps Story</a>
+<br>
 <a href="http://storymaps.esri.com/stories/2013/airports" target="_blank">Airports Story</a>
