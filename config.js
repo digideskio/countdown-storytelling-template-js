@@ -5,13 +5,13 @@ define([],
 			
 			//Enter a title, if no title is specified, the webmap's title is used.
 			//title should be readable from ArcGIS.com viewer TOC
-			//title: "Giant container ports stitch together the global economy",
+			//title: "Your title here",
 			
 			//Enter a subtitle, if not specified the ArcGIS.com web map's summary is used
-			//subtitle: "The fifty largest ports link six continents and countless supply chains.",
+			//subtitle: "Your subtitle here",
 			
 			//id for satellite (or intended large scale) web map
-			webmap_largescale: "08c8c7870b2d44e7822548cb3cc6c057", 
+			webmap_largescale: "86de95d4e0244cba80f0fa2c9403a7b2", 
 			
 			//id for overview web map; this is the map that contains the content point layer
 			webmap_overview: "91e2bd1ecfb943c8af893f5eb67d6ff7",
