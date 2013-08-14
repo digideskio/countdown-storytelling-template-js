@@ -20,8 +20,9 @@ define([],
 			contentLayer: "25 Busiest Airports", 
 			fieldName_Rank: "rank",
 			fieldName_Name: "airport",
-			fieldName_Level: "level", 
-			
+			//NOTE: if level field doesn't exist, app will use defaultLargeScaleZoomLevel
+			fieldName_Level: "level",
+
 			//Initial zoom level for overview map
 			initialZoomLevel: 2,
 			
