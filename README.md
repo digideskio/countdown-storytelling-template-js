@@ -4,7 +4,7 @@ This repository contains the application files for the "Countdown" story map tem
 
 [View live app here](http://storymaps.esri.com/templates/countdown)
 
-![App](http://github.com/Esri/countdown-storytelling-template-js/blob/master/resources/images/app/thumbnail.jpg) 
+![App](https://raw.github.com/Esri/countdown-storytelling-template-js/master/resources/images/app/thumbnail.jpg) 
 
 ## Licensing
 Copyright 2012 Esri
