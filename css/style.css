@@ -292,15 +292,6 @@ a:hover{
 	margin-bottom:1px;
 }
 
-#case #blot a {
-	font:Verdana, Geneva, sans-serif;
-	color:#FFFFFF;
-	position:absolute;
-	top:5px;
-	right:10px;
-	font-size:15px;
-}
-
 #case #blot #label {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	padding-left:5px;
