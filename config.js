@@ -11,7 +11,7 @@ define([],
 			//subtitle: "Your subtitle here",
 			
 			//id for satellite (or intended large scale) web map
-			webmap_largescale: "86de95d4e0244cba80f0fa2c9403a7b2", 
+			webmap_largescale: "aaeeb088f21e42d6abf6204fac61aeb8", 
 			
 			//id for overview web map; this is the map that contains the content point layer
 			webmap_overview: "91e2bd1ecfb943c8af893f5eb67d6ff7",
