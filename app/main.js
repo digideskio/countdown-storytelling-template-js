@@ -102,7 +102,7 @@ function init() {
 	var mapDeferred = esri.arcgis.utils.createMap(_configOptions.webmap_overview, "mapOV", {
 		mapOptions: {
 			slider: true,
-			wrapAround180: true
+			wrapAround180: false
 		},
 		ignorePopups: false,
 		infoWindow: _popup	
@@ -254,7 +254,7 @@ function initMap() {
 function transfer()
 {
 	var arr = $.grep(_sourceLayer.graphics, function(n, i){
-		return n.attributes.getValueCI(_configOptions.fieldName_Name) == _selected.attributes.getValueCI(_configOptions.fieldName_Name);
+		return n.attributes.getValueCI(_configOptions.fieldName_Rank) == _selected.attributes.getValueCI(_configOptions.fieldName_Rank);
 	});
 	_mapOV.infoWindow.setFeatures([arr[0]]);
 	_mapOV.infoWindow.show();
