@@ -135,6 +135,7 @@ function init() {
 
 		_locations = _sourceLayer.graphics;
 		$.each(_locations, function(index, value){value.attributes.getValueCI = getValueCI}); // assign extra method to handle case sensitivity
+		_locations.sort(compare);
 		
 		loadList();
 		
@@ -606,6 +607,14 @@ function getValueCI(field) {
 	});
 	return this[found];	
 }
+
+function compare(a,b) {
+	rank_a = parseInt(a.attributes.getValueCI(_configOptions.fieldName_Rank));
+	rank_b = parseInt(b.attributes.getValueCI(_configOptions.fieldName_Rank));
+	if (rank_a < rank_b) return -1;
+	else if (rank_a == rank_b) return 0;
+	else return 1;
+}	
 
 function specialCenterAndZoom(map, center, level)
 {
