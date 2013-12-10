@@ -272,6 +272,11 @@ a:hover{
 	background-color:#e4e4e4;
 }
 
+#case .numberDiv.selected, .nameDiv.selected {
+	background-color:#FF0000 !important;
+	color:#FFFFFF;
+	border-color:#000000;
+}
 
 #case #blot {
 	background-color:#FFF;
@@ -305,12 +310,6 @@ a:hover{
 #case #blot #label .title {
 	color:#4c4c4c;
 	font-size:22px;
-}
-
-.selected {
-	background-color:#FF0000 !important;
-	color:#FFFFFF;
-	border-color:#000000;
 }
 
 #info {
