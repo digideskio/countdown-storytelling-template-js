@@ -192,7 +192,7 @@ a:hover{
 }
 
 
-#topRow, #bottomRow {
+#table #topRow, #bottomRow {
 	position:absolute;
 	background-color:#e4e4e4;
 	width:100%;
@@ -201,26 +201,26 @@ a:hover{
 	border-bottom:1px solid #ccc;
 }
 
-#bottomRow {
+#table #bottomRow {
 	bottom:0px;
 	border-top:1px solid #ccc;
 }
 
-#topRow .numberDiv {
+#table #topRow .numberDiv {
 	cursor:pointer;
 }
 
-#bottomRow .numberDiv {
+#table #bottomRow .numberDiv {
 	cursor:pointer;
 }
 
-#topRow #iconList {
+#table #topRow #iconList {
 	margin-top:10px;
 	margin-left:10px;
 	cursor:pointer;	
 }
 
-#case #wrapper {
+#table #wrapper {
 	position:absolute; 
 	top:41px;
 	z-index:1;
@@ -230,7 +230,7 @@ a:hover{
 	overflow:auto;
 }
 
-#case #wrapper ul {
+#table #wrapper ul {
 	list-style:none;
 	padding:0;
 	margin:0;
@@ -238,7 +238,7 @@ a:hover{
 	text-align:left;
 }
 
-#case #wrapper li {
+#table #wrapper li {
 	position:relative;
 	height:40px;
 	line-height:40px;
@@ -247,11 +247,11 @@ a:hover{
 	cursor:pointer;
 }
 
-#case #wrapper li > a {
+#table #wrapper li > a {
 	display:block;
 }
 
-#case .numberDiv {
+#table .numberDiv {
 	position:absolute;
 	width:40px;
 	height:40px;
@@ -263,7 +263,7 @@ a:hover{
 	color:#FFFFFF;
 }
 
-#case .nameDiv {
+#table .nameDiv {
 	position:absolute;
 	height:40px;
 	left:40px;
@@ -272,7 +272,7 @@ a:hover{
 	background-color:#e4e4e4;
 }
 
-#case .numberDiv.selected, .nameDiv.selected {
+#table .numberDiv.selected, .nameDiv.selected {
 	background-color:#FF0000 !important;
 	color:#FFFFFF;
 	border-color:#000000;
