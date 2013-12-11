@@ -356,7 +356,7 @@ function changeState(toState)
 			$("#intro").animate({left:500},"slow");
 		} else if (_currentState == STATE_INFO) {
 			$("#flipper").hide();
-			$("#case #blot").animate({left:$("#case").width()});
+			$("#blot").animate({left:$("#case").width()});
 		} else if (_currentState == STATE_TABLE) {
 			// redundant
 		} else {
@@ -380,7 +380,7 @@ function changeState(toState)
 			$("#intro").animate({left:41},"slow");
 		} else if (_currentState == STATE_INFO) {
 			$("#intro").animate({left:41},"slow",function(){
-				$("#case #blot").animate({left:$("#case").width()});
+				$("#blot").animate({left:$("#case").width()});
 			});
 			$("#flipper").hide();
 		} else if (_currentState == STATE_INTRO) {
@@ -505,12 +505,12 @@ function handleWindowResize() {
 
 	$("#case").height($("#leftPane").height());
 
-	$("#case #table").height($("#case").height());
-	$("#case #table #wrapper .nameDiv").width($("#leftPane").width() - $("#case #wrapper .numberDiv").width()); 
+	$("#table").height($("#case").height());
+	$("#table #wrapper .nameDiv").width($("#leftPane").width() - $("#table #wrapper .numberDiv").width()); 
 	
-	$("#case #wrapper").height($("#case").height() - $("#topRow").height() - $("#bottomRow").height() - 3);
-	$("#case #blot").width($("#leftPane").width() - 40);	
-	$("#case #blot").height($("#leftPane").height() - $("#topRow").height() - 21);
+	$("#table #wrapper").height($("#case").height() - $("#table #topRow").height() - $("#table #bottomRow").height() - 3);
+	$("#blot").width($("#leftPane").width() - 40);	
+	$("#blot").height($("#leftPane").height() - $("#table #topRow").height() - 21);
 	
 	$("#intro").width($("#leftPane").width()-70);
 	$("#intro").height($("#leftPane").height());
@@ -518,10 +518,10 @@ function handleWindowResize() {
 	$(_divMapRight).height($("body").height() - $("#header").height());
 	$(_divMapRight).width($("body").width() - $("#leftPane").width());
 	
-	$("#case #blot #inner").height($("#case #blot").height() - (parseInt($("#case #blot #inner").css("margin-top")) + parseInt($("#case #blot #inner").css("margin-bottom"))));
+	$("#blot #inner").height($("#blot").height() - (parseInt($("#blot #inner").css("margin-top")) + parseInt($("#blot #inner").css("margin-bottom"))));
 	
-	$(_divMapLeft).width($("#case #blot #inner").width());
-	$(_divMapLeft).height($("#case #blot #inner").height() - ($("#case #blot #info").height() + parseInt($("#case #blot #inner").css("margin-top"))));
+	$(_divMapLeft).width($("#blot #inner").width());
+	$(_divMapLeft).height($("#blot #inner").height() - ($("#blot #info").height() + parseInt($("#blot #inner").css("margin-top"))));
 	$("#flipper").css("top", $("#info").height() + ($(_divMapLeft).height() / 2) + ($("#flipper").height() / 2));
 	
 	if (!_scroll) {
