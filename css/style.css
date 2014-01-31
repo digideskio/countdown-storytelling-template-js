@@ -124,20 +124,19 @@ a:hover{
 }
 
 #map {
-	position:relative;
+	position:absolute;
 	border:none;
 	padding:0;
 	height:100%;
 	width:50%;
 	overflow:hidden;
-	float:left;
 }
 
 #mapOV {
 	height:100%;
 	width:100%;
-	position:relative;
-	float:left;
+	position:absolute;
+	overflow:hidden;
 }
 
 #hoverInfo{

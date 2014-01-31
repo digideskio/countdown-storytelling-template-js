@@ -516,12 +516,17 @@ function handleWindowResize() {
 	$("#intro").height($("#leftPane").height());
 		
 	$(_divMapRight).height($("body").height() - $("#header").height());
-	$(_divMapRight).width($("body").width() - $("#leftPane").width());
+	$(_divMapRight).width($("body").width() - $("#leftPane").outerWidth());
+	$(_divMapRight).css("left", $("#leftPane").outerWidth());
+	$(_divMapRight).css("top", $("#header").height());	
 	
 	$("#blot #inner").height($("#blot").height() - (parseInt($("#blot #inner").css("margin-top")) + parseInt($("#blot #inner").css("margin-bottom"))));
 	
 	$(_divMapLeft).width($("#blot #inner").width());
 	$(_divMapLeft).height($("#blot #inner").height() - ($("#blot #info").height() + parseInt($("#blot #inner").css("margin-top"))));
+	$(_divMapLeft).css("top", $("#blot #info").outerHeight());
+	$(_divMapLeft).css("left", 0);	
+	
 	$("#flipper").css("top", $("#info").height() + ($(_divMapLeft).height() / 2) + ($("#flipper").height() / 2));
 	
 	if (!_scroll) {
