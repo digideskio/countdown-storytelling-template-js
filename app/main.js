@@ -286,8 +286,6 @@ function onKeyDown(e)
 function listItemClick(e) 
 {
 	
-	if (_counter == 0) switchMaps();
-	
 	if ($(this).find(".numberDiv").hasClass("selected") && (_currentState != STATE_TABLE)) {
 		changeState(STATE_TABLE);
 	} else {
@@ -296,6 +294,7 @@ function listItemClick(e)
 		var index = $.inArray(this, $("#thelist li"));
 		preSelection();
 		_selected = _locations[index];
+		if (_counter == 0) switchMaps();
 		postSelection();
 		highlightTab(this);
 
@@ -458,12 +457,12 @@ function highlightTab(tab)
 
 function layer_onClick(event)
 {
-	if (_counter == 0) switchMaps();
 	preSelection();
 	_selected = event.graphic;
 	var index = $.inArray(_selected, _locations);
 	highlightTab($("#thelist li").eq(index));
 	scrollToPage(index);	
+	if (_counter == 0) switchMaps();
 	postSelection();
 	if (_currentState != STATE_INFO) changeState(STATE_INFO);
 }
