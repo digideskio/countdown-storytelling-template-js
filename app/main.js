@@ -561,14 +561,20 @@ function postSelection()
 	// center to selected location, and zoom, if appropriate.
 	var level = _selected.attributes.getValueCI(_configOptions.fieldName_Level);
 	if (!level) level = _configOptions.defaultLargeScaleZoomLevel;
-	// not really sure it's necessary to distinguish between 
-	// centerAt and centerAndZoom.  pretty sure I could get by
-	// with just centerAndZoom, but just in case centerAt is more
-	// fluid, I will provide the option.
-	if (level == _mapSat.getLevel()) {
-		_mapSat.centerAt(_selected.geometry)
+	if (_isIE) {
+		// using work-around for IE, because centerAndZoom seems to have
+		// issues when panning over large distances
+		specialCenterAndZoom(_mapSat, _selected.geometry, level);
 	} else {
-		_mapSat.centerAndZoom(_selected.geometry, level)
+		// not really sure it's necessary to distinguish between 
+		// centerAt and centerAndZoom.  pretty sure I could get by
+		// with just centerAndZoom, but just in case centerAt is more
+		// fluid, I will provide the option.
+		if (level == _mapSat.getLevel()) {
+			_mapSat.centerAt(_selected.geometry)
+		} else {
+			_mapSat.centerAndZoom(_selected.geometry, level)
+		}
 	}
 		
 	// make the selected location's icon BIG
@@ -626,4 +632,46 @@ function compare(a,b) {
 	if (rank_a < rank_b) return -1;
 	else if (rank_a == rank_b) return 0;
 	else return 1;
+}
+
+function specialCenterAndZoom(map, center, level)
+{
+	
+	/* this function is a work-around to using centerAt() at large extents.
+	   there seems to be a bug whereby the map fetches unneccesary tiles
+	   on centerAt(), so we need to make sure to turn off layers (and zoom out?)
+	   before re-centering */
+	
+	// which layers are visible?
+	
+	var visibleLayers = [];
+	
+	$.each(map.layerIds, function(index, value) {
+		if (map.getLayer(value).visible) visibleLayers.push(value);
+	});
+	
+	$.each(map.graphicsLayerIds, function(index, value) {
+		if (map.getLayer(value).visible) visibleLayers.push(value);
+	});
+	
+	// turn off visible layers
+	
+	$.each(visibleLayers, function(index, value) {
+		map.getLayer(value).hide();
+	});
+
+	map.setLevel(3);
+	setTimeout(function() {
+		map.centerAt(center);
+		setTimeout(function() {
+			map.setLevel(level);
+			map.centerAt(center);
+			setTimeout(function(){
+				// turn visible layers back on
+				$.each(visibleLayers, function(index, value) {
+					map.getLayer(value).show();
+				});
+			}, 200);
+		}, 200);
+	}, 200)
 }
