@@ -56,5 +56,5 @@ limitations under the License.
 
 A copy of the license is available in the repository's [license.txt](https://github.com/Esri/park-and-recreation-finder/blob/master/license.txt) file.
 
-[](Esri Tags: Storytelling Countdown ArcGIS-Online Template)
+[](Esri Tags: Countdown ArcGIS-Online Template)
 [](Esri Language: JavaScript)
