@@ -1,5 +1,8 @@
 # countdown-storytelling-template-js
 
+### Deprecated App
+This application is no longer in active development.
+
 This repository contains the application files for the "Countdown" story map template.  This template presents a (ranked) list of places and enables the user to explore the list content, using both overview and large scale map views.
 
 [View live app here](http://storymaps.esri.com/templates/countdown)
